@@ -32,3 +32,5 @@ Route::group(['middleware'=>'auth:api'], function(){
    Route::post('user/activity/{name}', [UserActivityController::class, 'log']);
    Route::get('health-conditions', [HealthConditionController::class, 'getAll']);
 });
+
+

@@ -19,6 +19,7 @@ return [
     'errors'=>[
         'user_not_registered' =>  'User not registered',
         'invalid_credentials' =>  'Invalid credentials',
+        'invalid_referral_code' =>  'Invalid referral code',
     ]
 
 ];
