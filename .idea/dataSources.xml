@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:mysql://localhost:33060/step_rich</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="heroku_73dfa1e5c243364@us-cdbr-east-02.cleardb.com" uuid="01775ce9-8339-4b4b-8f1a-18be1a7e6459">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://us-cdbr-east-02.cleardb.com:3306/heroku_73dfa1e5c243364</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
