@@ -22,7 +22,7 @@ class UserProfileController extends Controller
     }
 
     function getProfile(){
-        return JsonResponse::success(Auth::user());
+        return JsonResponse::success($this->userService->getProfile(Auth::user()->id));
     }
 
     function update(Request  $request){

@@ -6,11 +6,19 @@ namespace App\Services;
 
 use App\Exceptions\GeneralException;
 use App\Models\ActivityLog;
+use App\Repositories\UserActivityRepository;
 use Carbon\Carbon;
 
 class ActivityLogService
 {
     private $activities = ['steps'];
+
+    private $activityLogRepo;
+
+    public function __construct()
+    {
+        $this->activityLogRepo  =new UserActivityRepository();
+    }
 
     function log($userId, $activity, $value, $date = null)
     {
@@ -28,7 +36,8 @@ class ActivityLogService
             if ($dateObj->shiftTimezone('UTC')->lessThanOrEqualTo($lastLog->created_at)) {
                 throw new GeneralException(__('activity.errors.invalid_data'));
             }
-            $newValue = $value - $lastLog->value;
+            $lastSum  =  $this->activityLogRepo->getSumByDate($userId, $dateObj->format('Y-m-d'));
+            $newValue = $value - $lastSum;
             if ($newValue < 0) {
                 $newValue = $value;
             }

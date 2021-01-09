@@ -53,4 +53,10 @@ class User extends Authenticatable
     function scopeFindByReferralCode($query, $referralCode){
         return $query->where('referral_code', $referralCode);
     }
+
+    function isProfileComplete(){
+        return is_null($this->dob) == false && is_null($this->name) == false
+            && is_null($this->gender) == false && is_null($this->activity_level)
+            && is_null($this->weight) == false && is_null($this->height)  ;
+    }
 }
