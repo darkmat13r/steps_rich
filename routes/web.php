@@ -17,6 +17,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('test', function(){
-    $service = new \App\Services\UserTreeService();
-   dd( $service->getTreeById(1));
+  dd(\Carbon\Carbon::now()->dayOfWeek);
 });

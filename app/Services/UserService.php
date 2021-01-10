@@ -32,6 +32,7 @@ class UserService
             throw new GeneralException('user.errors.user_not_found', 404);
         }
         $dailySteps = $this->userActivityRepo->getSumByDate($userId, Carbon::now()->format('Y-m-d'));
+
         $user->daily_steps = (int)$dailySteps;
         //
         $weekNumber = Carbon::now()->dayOfWeek;
