@@ -22,6 +22,7 @@ class ActivityLogService
 
     function log($userId, $activity, $value, $date = null)
     {
+        $value = (int) $value;
         if (!in_array($activity, $this->activities)) {
             throw  new GeneralException(__('activity.errors.invalid_activity', $activity));
         }
