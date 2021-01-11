@@ -17,5 +17,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('test', function(){
-  dd(\Carbon\Carbon::now()->dayOfWeek);
+    $path = \Illuminate\Support\Facades\Storage::path('../logs/laravel-'.\Carbon\Carbon::now()->format('Y-m-d').'.log');
+  dd(file_get_contents($path));
+});
+Route::get('log', function(){
+    dd(file_get_contents(\Illuminate\Support\Facades\Storage::url('')));
 });
