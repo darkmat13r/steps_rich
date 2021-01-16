@@ -61,6 +61,10 @@ class UserService
         return $user;
     }
 
+    function caloriesBurnt($user, $steps){
+
+    }
+
     function getCycleStats(User $user, LevelRequirement $requirement)
     {
         $cycle = $requirement->required_cycle;

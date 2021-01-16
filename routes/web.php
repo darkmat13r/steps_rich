@@ -17,9 +17,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('test', function(){
-    $user = \App\Models\User::find(1);
-    $date = $user->created_at->diffInDays(\Carbon\Carbon::now());
-   dd($date);
+    $user = \App\Models\ActivityLog::all();
+
+   dd($user);
 });
 Route::get('log', function(){
     dd(file_get_contents(\Illuminate\Support\Facades\Storage::url('')));
