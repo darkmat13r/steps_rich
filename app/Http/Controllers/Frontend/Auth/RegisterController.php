@@ -20,10 +20,10 @@ class RegisterController extends Controller
 
     function register(Request  $request){
         $validator = Validator::make($request->all(), [
-            'username' => ['required'],
+            'username' => ['required', 'email', 'unique:users'],
             'password' =>  ['required'],
             'country_code' =>  ['required'],
-            'phone' =>  ['required'],
+            'phone' =>  ['required', 'unique:users'],
         ]);
         if($validator->fails())
             return JsonResponse::fail($validator->errors()->first());
