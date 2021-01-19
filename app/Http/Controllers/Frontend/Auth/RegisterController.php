@@ -18,16 +18,20 @@ class RegisterController extends Controller
     }
 
 
-    function register(Request  $request){
+    function register(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'username' => ['required', 'email', 'unique:users,email'],
-            'password' =>  ['required'],
-            'country_code' =>  ['required'],
-            'phone' =>  ['required', 'unique:users'],
+            'password' => ['required'],
+            'country_code' => ['required'],
+            'device_id' => ['required', 'unique:users'],
+            'phone' => ['required', 'unique:users'],
+        ], [
+            'device_id.unique' => 'Your device is already registered with different account'
         ]);
-        if($validator->fails())
+        if ($validator->fails())
             return JsonResponse::fail($validator->errors()->first());
-        $user = $this->authService->register($request->username, $request->country_code, $request->phone, $request->password, $request->referral_code);
+        $user = $this->authService->register($request->only(['username', 'country_code','phone', 'password', 'referral_code', 'device_id']));
         return JsonResponse::success($user);
     }
 }

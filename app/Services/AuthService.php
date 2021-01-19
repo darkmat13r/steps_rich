@@ -14,21 +14,20 @@ use Illuminate\Support\Facades\Hash;
 class AuthService
 {
 
-    function register($email, $countryCode, $phone, $password, $referralCode = null)
+    function register($data)
     {
+        $referralCode = isset($data['referral_code']) ? $data['referral_code'] : null;
         $referredBy = User::findByReferralCode($referralCode)->first();
         if($referralCode && $referredBy){
             new GeneralException('auth.errors.invalid_referral_code');
         }
-        $user = (new User())->forceFill([
-            'email' => $email,
-            'phone' => $phone,
-            'country_code' => $countryCode,
-            'password' => bcrypt($password),
-            'referral_code' => StringHelper::randomString(6)
-        ]);
+        $data['password'] = bcrypt($data['password']);
+        $data['referral_code'] = StringHelper::randomString(6);
+        $data['email'] = $data['username'];
+        unset($data['username']);
+        $user = (new User())->forceFill($data);
         $user->save();
-        $user->access_token = $user->createToken($email)->accessToken;
+        $user->access_token = $user->createToken($data['email'])->accessToken;
         if($referralCode){
             $this->addToUserTree($user->id, $referredBy->id);
         }

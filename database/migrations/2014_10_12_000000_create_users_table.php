@@ -25,10 +25,11 @@ class CreateUsersTable extends Migration
             $table->enum('gender', ['male', 'female', 'other'])->nullable();
             $table->integer('age')->nullable();
             $table->enum('activity_level', ['active','moderate','inactive'])->nullable();
-            $table->float('weight')->nullable()->comment('Weight Unit is kg.');
+            $table->float('weight')->nullable()->comment('Weight Unit is KG.');
             $table->integer('height')->nullable()->comment('Height Unit is CM.');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('device_id');
             $table->rememberToken();
             $table->timestamps();
         });
