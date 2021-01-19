@@ -15,7 +15,7 @@ class AddLevelColumnToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
-            $table->unsignedInteger('level')->default(0);
+            $table->unsignedInteger('level')->default(1);
         });
     }
 
