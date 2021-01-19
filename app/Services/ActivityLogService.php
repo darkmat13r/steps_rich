@@ -33,27 +33,24 @@ class ActivityLogService
         } catch (\Exception $exception) {
             throw new GeneralException(__('activity.errors.invalid_date'));
         }
+        $offset = 0;
         if ($lastLog) {
             if ($dateObj->shiftTimezone('UTC')->lessThanOrEqualTo($lastLog->created_at)) {
                 throw new GeneralException(__('activity.errors.invalid_data'));
             }
             $lastSum  =  $this->activityLogRepo->getSumByDate($userId, $dateObj->format('Y-m-d'));
-            $newValue = $value - $lastSum;
+            $offset  =  $this->activityLogRepo->getOffsetByDate($userId, $dateObj->format('Y-m-d'));
+            $newValue = $value - $lastSum - $offset;
             if ($newValue < 0) {
                 $newValue = $value;
             }
             if ($newValue === 0) {
                 return $lastLog;
             }
+        }else{
+            $offset = $value;
+            $newValue = 0;
         }
-        $log = (new ActivityLog())->forceFill([
-            'type' => $activity,
-            'value' => $newValue,
-            'user_id' => $userId,
-            'created_at' => !is_null($date) ? $date : Carbon::now()->toDateString()
-        ]);
-        $log->save();
-
-        return $log;
+        return $this->activityLogRepo->create($userId, $activity, $newValue, $offset, $date);
     }
 }
