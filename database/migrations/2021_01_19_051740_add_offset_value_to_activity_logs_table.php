@@ -14,7 +14,7 @@ class AddOffsetValueToActivityLogsTable extends Migration
     public function up()
     {
         Schema::table('activity_logs', function (Blueprint $table) {
-            $table->integer('offset')->default(0);
+            $table->integer('offset')->after('value')->default(0);
         });
     }
 
