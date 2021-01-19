@@ -27,7 +27,7 @@ class ActivityLogService
             throw  new GeneralException(__('activity.errors.invalid_activity', $activity));
         }
         $lastLog = ActivityLog::where('user_id', $userId)->orderBy('id', 'DESC')->first();
-        $newValue = $value;
+
         try {
             $dateObj = Carbon::createFromFormat('Y-m-d H:i:s', $date);
         } catch (\Exception $exception) {
@@ -39,8 +39,8 @@ class ActivityLogService
                 throw new GeneralException(__('activity.errors.invalid_data'));
             }
             $lastSum  =  $this->activityLogRepo->getSumByDate($userId, $dateObj->format('Y-m-d'));
-            $offset  =  $this->activityLogRepo->getOffsetByDate($userId, $dateObj->format('Y-m-d'));
-            $newValue = $value - $lastSum - $offset;
+            $oldOffset  =  $this->activityLogRepo->getOffsetByDate($userId, $dateObj->format('Y-m-d'));
+            $newValue = $value - $lastSum - $oldOffset;
             if ($newValue < 0) {
                 $newValue = $value;
             }
