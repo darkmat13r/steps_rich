@@ -70,15 +70,42 @@ class UserService
         $cycle = $requirement->required_cycle;
         $daysToCompleteLevel = 0;
         if ($requirement->required_repeat_interval == "week") {
-            $daysToCompleteLevel = $cycle * 7 * $requirement->required_repeat;
+            $daysToCompleteLevel = 7 * $requirement->required_repeat;
+        }else{
+            $daysToCompleteLevel =$requirement->required_repeat;
         }
         $startDate = $user->created_at;
         $data = [];
-        for ($i = 0; $i < $cycle; $i++) {
+        $currentCycle  = 0;
+        $lastCycleAchieved =  false;
+        while(Carbon::now()->greaterThanOrEqualTo($startDate) && $currentCycle <  $cycle){
+            $achieved = 0;
+            $cycleStepsCount  = 0;
+            for ($i=0;$i<$daysToCompleteLevel;$i++){
+                $count = $this->userActivityRepo->getSumByDate($user->id, $startDate->format('Y-m-d'));
+                $cycleStepsCount += $count;
+                if($count >= $requirement->required_steps ){
+                    $achieved++;
+                }
+                $startDate = $startDate->addDays(1);
+            }
+            if($achieved >= $requirement->required_repeat){
+                $data[] = $requirement->required_steps  * $cycle;
+                $lastCycleAchieved =true;
+            }else if($lastCycleAchieved){
+                $data[] = min($cycleStepsCount, $requirement->required_steps  * $cycle);
+            }
+        }
+
+        for($i = 0 ; $i<= $cycle - count($data);$i++){
+            $data[] = 0;
+        }
+      /*  for ($i = 0; $i < $cycle; $i++) {
+
             $endDate = $user->created_at->addDays(($i + 1) * 7);
             $data[] = $this->userActivityRepo->getSumByDate($user->id, $startDate->format('Y-m-d'), $endDate->format('Y-m-d'));
             $startDate = $endDate->addDays(1);
-        }
+        }*/
 
         return $data;
     }
