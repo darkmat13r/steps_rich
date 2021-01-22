@@ -53,9 +53,9 @@ class ActivityLogService
                 return $lastLog;
             }*/
         }else{
-            $offset = $value;
+            //$offset = $value;
             $newValue = 0;
         }
-        return $this->activityLogRepo->create($userId, $activity, $value, $offset, $date);
+        return $this->activityLogRepo->create($userId, $activity, $value, $offset);
     }
 }
