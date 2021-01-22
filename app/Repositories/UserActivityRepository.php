@@ -30,7 +30,7 @@ class UserActivityRepository
             'value' => $value,
             'user_id' => $userId,
             'offset' => $offset,
-            'created_at' => !is_null($date) ? $date : Carbon::now()->toDateString()
+            'created_at' => !is_null($date) ? $date : Carbon::now()->toDateTimeString()
         ]);
         $log->save();
         return $log;
