@@ -35,7 +35,7 @@ class ActivityLogService
             throw new GeneralException(__('activity.errors.invalid_date'));
         }*/
 
-        $lastLog = ActivityLog::where('user_id', $userId)->whereDate('created_at', $dateObj->format('Y-m-d'))->orderBy('id', 'DESC')->first();
+        $lastLog = $this->activityLogRepo->getLastEntryOfDate($userId, $dateObj);
         $offset = 0;
         if ($lastLog) {
             $lastLog->value  = $value;
@@ -46,4 +46,10 @@ class ActivityLogService
         }
 
     }
+
+    function getLastEntry($userId){
+        return $this->activityLogRepo->getLastEntryOfDate($userId, Carbon::now());
+    }
+
+
 }

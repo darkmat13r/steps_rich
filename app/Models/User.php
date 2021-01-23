@@ -12,7 +12,7 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens;
 
-    protected $dates = ['created_at'];
+    protected $dates = ['created_at', 'first_cycle_started_at','level_last_updated_at'];
     /**
      * The attributes that are mass assignable.
      *

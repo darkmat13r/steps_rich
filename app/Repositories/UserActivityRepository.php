@@ -35,4 +35,9 @@ class UserActivityRepository
         $log->save();
         return $log;
     }
+
+    public function getLastEntryOfDate($userId, Carbon $dateObj)
+    {
+       return ActivityLog::where('user_id', $userId)->whereDate('created_at', $dateObj->format('Y-m-d'))->orderBy('id', 'DESC')->first();
+    }
 }

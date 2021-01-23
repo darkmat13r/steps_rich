@@ -30,4 +30,9 @@ class UserActivityController extends Controller
         $this->activityService->log($user->id, $activity, $request->value, $request->date );
         return JsonResponse::success();
     }
+
+    function getLastEntry(Request  $request){
+        $user = Auth::user();
+        return JsonResponse::success($this->activityService->getLastEntry($user->id));
+    }
 }

@@ -30,6 +30,7 @@ Route::group(['middleware'=>'auth:api'], function(){
    Route::get('user', [UserProfileController::class, 'getProfile']);
    Route::put('user/health', [UserProfileController::class, 'updateHealthData']);
    Route::post('user/activity/{name}', [UserActivityController::class, 'log']);
+   Route::get('user/activity/today', [UserActivityController::class, 'getLastEntry']);
    Route::get('health-conditions', [HealthConditionController::class, 'getAll']);
 });
 
