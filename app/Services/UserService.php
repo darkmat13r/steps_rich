@@ -68,7 +68,7 @@ class UserService
     function getCycleStats(User $user, LevelRequirement $requirement)
     {
 
-        $lastLevelUpdatedAt = isset($user->level_last_updated_at) && !is_null($user->level_last_updated_at)? $user->level_last_updated_at : $user->created_at;
+        $startDate = isset($user->level_last_updated_at) && !is_null($user->level_last_updated_at)? $user->level_last_updated_at : $user->created_at;
         $firstCycleStartedAt =  $user->first_cycle_started_at;
         $daysToCompleteLevel = 0;
         if ($requirement->required_repeat_interval == "week") {
@@ -80,7 +80,7 @@ class UserService
         $data = [];
         $currentCycle  = 0;
         $lastCycleAchieved =  false;
-        while(Carbon::now()->greaterThanOrEqualTo($lastLevelUpdatedAt)){
+        while(Carbon::now()->greaterThanOrEqualTo($startDate)){
             $achieved = 0;
             $cycleStepsCount  = 0;
             for ($i=0;$i<$daysToCompleteLevel;$i++){
