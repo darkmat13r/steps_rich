@@ -68,7 +68,7 @@ class UserService
     function getCycleStats(User $user, LevelRequirement $requirement)
     {
 
-        $lastLevelUpdatedAt = isset($user->level_last_updated_at) ? $user->level_last_updated_at : $user->created_at;
+        $lastLevelUpdatedAt = isset($user->level_last_updated_at) && !is_null($user->level_last_updated_at)? $user->level_last_updated_at : $user->created_at;
         $firstCycleStartedAt =  $user->first_cycle_started_at;
         $daysToCompleteLevel = 0;
         if ($requirement->required_repeat_interval == "week") {
