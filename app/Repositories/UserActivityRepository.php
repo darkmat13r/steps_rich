@@ -25,7 +25,9 @@ class UserActivityRepository
     }
 
     function create($userId,$activity, $value, $offset = 0, $date= null){
-        $log = (new ActivityLog())->forceFill([
+        $log = ActivityLog::updateOrCreate([
+          'created_at' => Carbon::now()->toDateTimeString()
+        ],[
             'type' => $activity,
             'value' => $value,
             'user_id' => $userId,
