@@ -28,7 +28,7 @@ class UserProfileController extends Controller
     function update(Request  $request){
         Log::debug(json_encode($request->all()));
         $user = $this->userService->updateProfile(Auth::user()->id, $request->all());
-        return JsonResponse::success($user);
+        return JsonResponse::success($this->userService->getProfile(Auth::user()->id));
     }
 
     function updateHealthData(Request $request){
