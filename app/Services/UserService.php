@@ -80,7 +80,7 @@ class UserService
         $data = [];
         $currentCycle  = 0;
         $lastCycleAchieved =  false;
-        $dayRemaining = $user->created_at->dayOfWeek - Carbon::now()->dayOfWeek;
+        $dayRemaining = 7 - Carbon::now()->dayOfWeek - $user->created_at->dayOfWeek;
         while(Carbon::now()->greaterThanOrEqualTo($startDate)){
             $achieved = 0;
             $cycleStepsCount  = 0;
@@ -101,8 +101,8 @@ class UserService
         }
 
         if(!$lastCycleAchieved){
-            $startDate = Carbon::now()->addDays($dayRemaining)->toDateString();
 
+            $startDate = Carbon::now()->subDays($dayRemaining)->toDateString();
             $steps = $this->userActivityRepo->getSumByDate($user->id, $startDate, Carbon::now()->toDateString());
            $data[] = (int)$steps;
         }
