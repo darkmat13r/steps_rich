@@ -60,4 +60,8 @@ class User extends Authenticatable
             && is_null($this->gender) == false && is_null($this->activity_level)
             && is_null($this->weight) == false && is_null($this->height)  ;
     }
+
+    function healthConditions(){
+        return $this->hasMany(UserHealthCondition::class);
+    }
 }
