@@ -10,4 +10,10 @@ class ActivityLog extends Model
     use HasFactory;
 
     protected $dates = ['created_at'];
+    protected $fillable = ['created_at'
+        , 'type'
+        , 'value'
+        , 'user_id'
+        , 'offset'
+        , 'created_at'];
 }
