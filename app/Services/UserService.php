@@ -12,6 +12,7 @@ use App\Repositories\LevelRequirementRepository;
 use App\Repositories\UserActivityRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Request;
 
 class UserService
 {
@@ -38,6 +39,7 @@ class UserService
 
         $user->daily_steps = (int)$dailySteps;
         $user->daily_steps_date = Carbon::now()->toDateTimeString();
+
         $daysDiffFromAccountCreation = $user->created_at->diffInDays(Carbon::now());
         $daysOffset = $daysDiffFromAccountCreation % 7 + 1;
         $weeklySteps = [];

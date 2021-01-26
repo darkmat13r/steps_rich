@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Services\UserHealthConditionService;
 use App\Services\UserService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -21,7 +22,7 @@ class UserProfileController extends Controller
         $this->userHealthService = new UserHealthConditionService();
     }
 
-    function getProfile(){
+    function getProfile(Request  $request){
         return JsonResponse::success($this->userService->getProfile(Auth::user()->id));
     }
 
