@@ -72,7 +72,7 @@ class UserService
     function getCycleStats(User $user, LevelRequirement $requirement){
         $startDayOfWeek = $user->created_at->dayOfWeek;
         $dayRemaining = Carbon::now()->dayOfWeek  - $startDayOfWeek;
-        $startDate = Carbon::now()->subDays($startDayOfWeek);
+        $startDate = Carbon::now()->subDays($dayRemaining);
         $achieved  = 0;
         $data=[];
         while (Carbon::now()->greaterThanOrEqualTo($startDate)) {
