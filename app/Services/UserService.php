@@ -60,8 +60,8 @@ class UserService
         $user->next_level_days_left = $daysToCompleteLevel - $daysDiffFromAccountCreation % $daysToCompleteLevel;
         $user->weekly_stats = $weeklySteps;
         $user->completed = $this->getCycleStats($user, $user->requirement);
-        $user->steps_required_in_cycle = $user->requirement->required_period * $user->requirement->required_steps;
-        $user->minimum_steps_required_in_cycle = $user->requirement->minimum_period * $user->requirement->minimum_steps;
+        $user->steps_required_in_cycle = $user->requirement->required_steps;
+        $user->minimum_steps_required_in_cycle =$user->requirement->minimum_steps;
         return $user;
     }
 
