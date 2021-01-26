@@ -24,8 +24,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::post('login',[LoginController::class,'login']);
 Route::post('register',[RegisterController::class,'register']);
-
+Route::post('forgot-password', [\App\Http\Controllers\Frontend\PasswordResetLinkController::class, 'store'])
+    ->middleware('guest');
 Route::group(['middleware'=>['auth:api', 'timezone']], function(){
+
    Route::put('user', [UserProfileController::class, 'update']);
    Route::get('user', [UserProfileController::class, 'getProfile']);
    Route::put('user/health', [UserProfileController::class, 'updateHealthData']);

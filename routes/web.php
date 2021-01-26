@@ -16,11 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('test', function(){
-    $user = \App\Models\ActivityLog::all();
 
-   dd($user);
-});
-Route::get('log', function(){
-    dd(file_get_contents(\Illuminate\Support\Facades\Storage::url('')));
-});
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
