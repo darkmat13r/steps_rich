@@ -41,7 +41,7 @@ class UserService
         $user->daily_steps_date = Carbon::now()->toDateTimeString();
 
         $daysDiffFromAccountCreation = $user->created_at->diffInDays(Carbon::now());
-        $daysOffset = $daysDiffFromAccountCreation % 7 + 1;
+        $daysOffset = $daysDiffFromAccountCreation % 7 ;
         $weeklySteps = [];
 
         for ($i = 0; $i < 7; $i++) {
@@ -60,8 +60,8 @@ class UserService
         $user->next_level_days_left = $daysToCompleteLevel - $daysDiffFromAccountCreation % $daysToCompleteLevel;
         $user->weekly_stats = $weeklySteps;
         $user->completed = $this->getCycleStats($user, $user->requirement);
-        $user->steps_required_in_cycle = $user->requirement->required_steps;
-        $user->minimum_steps_required_in_cycle =$user->requirement->minimum_steps;
+        $user->steps_required_in_cycle = $user->requirement->required_period * $user->requirement->required_steps;
+        $user->minimum_steps_required_in_cycle = $user->requirement->minimum_period * $user->requirement->minimum_steps;
         return $user;
     }
 
@@ -79,7 +79,7 @@ class UserService
             $count = $this->userActivityRepo->getSumByDate($user->id, $startDate->toDateString());
             if ($count >= $requirement->required_steps) {
                 $achieved++;
-                $data[] = min($count, $requirement->required_steps);
+                $data[] = (int) min($count, $requirement->required_steps);
             }
             if($achieved == $requirement->required_period){
                 break;
@@ -92,6 +92,25 @@ class UserService
         return $data;
     }
 
+
+    function achievedGoals(User $user, LevelRequirement $requirement){
+        $startDayOfWeek = $user->created_at->dayOfWeek;
+        $dayRemaining = Carbon::now()->dayOfWeek  - $startDayOfWeek;
+        $startDate = Carbon::now()->subDays($dayRemaining);
+        $achieved  = 0;
+        while (Carbon::now()->greaterThanOrEqualTo($startDate)) {
+            $count = $this->userActivityRepo->getSumByDate($user->id, $startDate->toDateString());
+            if ($count >= $requirement->required_steps) {
+                $achieved++;
+            }
+            if($achieved == $requirement->required_period){
+                break;
+            }
+            $startDate =  $startDate->addDays(1);
+        }
+
+        return $achieved;
+    }
     /*function getCycleStats(User $user, LevelRequirement $requirement)
    {
 
