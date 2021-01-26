@@ -37,6 +37,7 @@ class UserService
         $dailySteps = $this->userActivityRepo->getSumByDate($userId, Carbon::now()->format('Y-m-d'));
 
         $user->daily_steps = (int)$dailySteps;
+        $user->daily_steps_date = Carbon::now()->toDateTimeString();
         $daysDiffFromAccountCreation = $user->created_at->diffInDays(Carbon::now());
         $daysOffset = $daysDiffFromAccountCreation % 7 + 1;
         $weeklySteps = [];
