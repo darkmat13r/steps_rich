@@ -75,6 +75,7 @@ class UserService
         $startDate = Carbon::now()->subDays($dayRemaining);
         $achieved  = 0;
         $data=[];
+        dd($startDate->toDateTimeString());
         while (Carbon::now()->greaterThanOrEqualTo($startDate)) {
             $count = $this->userActivityRepo->getSumByDate($user->id, $startDate->toDateString());
             if ($count >= $requirement->required_steps) {
