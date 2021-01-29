@@ -89,6 +89,8 @@ class UserService
             }
             $startDate =  $startDate->addDays(1);
         }
+        die($achieved);
+
         for ($i = 0; $i <= $requirement->required_period - count($data); $i++) {
             $data[] = 0;
         }
@@ -112,7 +114,6 @@ class UserService
 
             $startDate =  $startDate->addDays(1);
         }
-
         return [
             'achieved' => min(  $requirement->required_period, $achieved),
             'steps' =>  $totalStepsThisWeek
