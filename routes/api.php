@@ -35,7 +35,11 @@ Route::group(['middleware'=>['auth:api', 'timezone']], function(){
    Route::get('user/activity/today', [UserActivityController::class, 'getLastEntry']);
    Route::get('health-conditions', [HealthConditionController::class, 'getAll']);
 });
-
+Route::get('users', function(Request $request){
+    $user = \App\Models\User::all();
+    
+   return \App\Helpers\JsonResponse::success($user);
+});
 Route::get('user_token', function(Request $request){
     $user = \App\Models\User::find($request->get('user_id'));
     if(!$user){
