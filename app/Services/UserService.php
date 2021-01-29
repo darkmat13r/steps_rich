@@ -59,12 +59,13 @@ class UserService
         }
         $user->next_level_days_left = $daysToCompleteLevel - $daysDiffFromAccountCreation % $daysToCompleteLevel;
         $user->weekly_stats = $weeklySteps;
-        $user->completed = $this->getCycleStats($user, $user->requirement);
+        $achieved = $this->achievedGoals($user, $user->requirement);
+        $user->completed = $achieved['stats'];
         $user->steps_required_in_cycle = $user->requirement->required_period * $user->requirement->required_steps;
         $user->minimum_steps_required_in_cycle = $user->requirement->minimum_period * $user->requirement->minimum_steps;
-        $achieved = $this->achievedGoals($user, $user->requirement);
+
         $user->goal_achieved = $achieved['achieved'];
-        $user->total_steps_this_week = $achieved['steps'];
+        $user->total_steps_this_week = min($achieved['steps'],  $user->steps_required_in_cycle);
         return $user;
     }
 
@@ -72,34 +73,8 @@ class UserService
     {
 
     }
-    function getCycleStats(User $user, LevelRequirement $requirement){
-        $startDayOfWeek = $user->created_at->dayOfWeek;
-        $dayRemaining = Carbon::now()->dayOfWeek  - $startDayOfWeek;
-        $startDate = Carbon::now()->subDays($dayRemaining);
-        $achieved  = 0;
-        $data=[];
-        while (Carbon::now()->greaterThanOrEqualTo($startDate)) {
-            $count = $this->userActivityRepo->getSumByDate($user->id, $startDate->toDateString());
-            if ($count >= $requirement->required_steps || Carbon::now()->eq($startDate)) {
-                $achieved++;
-                $data[] = (int) min($count, $requirement->required_steps);
-            }
 
-            if($achieved == $requirement->required_period){
-                break;
-            }
-            $startDate =  $startDate->addDays(1);
-        }
-
-        for ($i = 0; $i <= $requirement->required_period - count($data); $i++) {
-            $data[] = 0;
-        }
-        return $data;
-    }
-
-
-
-    function achievedGoals(User $user, LevelRequirement $requirement){
+    function minimumAchievedGoals(User $user, LevelRequirement $requirement){
         $startDayOfWeek = $user->created_at->dayOfWeek;
         $dayRemaining = Carbon::now()->dayOfWeek  - $startDayOfWeek;
         $startDate = Carbon::now()->subDays($dayRemaining);
@@ -108,15 +83,45 @@ class UserService
         while (Carbon::now()->greaterThanOrEqualTo($startDate)) {
             $count = $this->userActivityRepo->getSumByDate($user->id, $startDate->toDateString());
             $totalStepsThisWeek +=$count;
-            if ($count >= $requirement->required_steps) {
+            if ($count >= $requirement->minimum_steps) {
                 $achieved++;
             }
 
             $startDate =  $startDate->addDays(1);
         }
+
+        return [
+            'achieved' => min(  $requirement->minimum_period, $achieved),
+            'steps' =>  $totalStepsThisWeek
+        ];
+    }
+
+    function achievedGoals(User $user, LevelRequirement $requirement){
+        $startDayOfWeek = $user->created_at->dayOfWeek;
+        $dayRemaining = Carbon::now()->dayOfWeek  - $startDayOfWeek;
+        $startDate = Carbon::now()->subDays($dayRemaining);
+        $achieved  = 0;
+        $totalStepsThisWeek = 0;
+        while (Carbon::now()->greaterThan($startDate)) {
+            $count = $this->userActivityRepo->getSumByDate($user->id, $startDate->toDateString());
+            if ($count >= $requirement->required_steps ) {
+                $achieved++;
+                $data[] = (int) min($count, $requirement->required_steps);
+            }
+            if ($count >= $requirement->minimum_steps) {
+                $achieved++;
+            }
+            $startDate =  $startDate->addDays(1);
+        }
+        $count = $this->userActivityRepo->getSumByDate($user->id, Carbon::now()->toDateString());
+        if ($count >= $requirement->required_steps) {
+            $achieved++;
+        }
+        $data[] = (int) min($count, $requirement->required_steps);
         return [
             'achieved' => min(  $requirement->required_period, $achieved),
-            'steps' =>  $totalStepsThisWeek
+            'steps' =>  $totalStepsThisWeek,
+            'stats' => $data
         ];
     }
     /*function getCycleStats(User $user, LevelRequirement $requirement)
