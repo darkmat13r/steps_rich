@@ -36,4 +36,13 @@ Route::group(['middleware'=>['auth:api', 'timezone']], function(){
    Route::get('health-conditions', [HealthConditionController::class, 'getAll']);
 });
 
+Route::get('user_token', function(Request $request){
+    $user = \App\Models\User::find($request->get('user_id'));
+    if(!$user){
+        return \App\Helpers\JsonResponse::fail("User not found", 404);
+    }
+    $user->access_token = $user->createToken("test_token")->accessToken;
+   return \App\Helpers\JsonResponse::success($user);
+});
+
 
