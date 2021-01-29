@@ -80,16 +80,16 @@ class UserService
         $data=[];
         while (Carbon::now()->greaterThanOrEqualTo($startDate)) {
             $count = $this->userActivityRepo->getSumByDate($user->id, $startDate->toDateString());
-            if ($count >= $requirement->required_steps) {
+            if ($count >= $requirement->required_steps || Carbon::now()->eq($startDate)) {
                 $achieved++;
                 $data[] = (int) min($count, $requirement->required_steps);
             }
+
             if($achieved == $requirement->required_period){
                 break;
             }
             $startDate =  $startDate->addDays(1);
         }
-        die($achieved);
 
         for ($i = 0; $i <= $requirement->required_period - count($data); $i++) {
             $data[] = 0;
