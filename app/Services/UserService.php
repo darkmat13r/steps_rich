@@ -106,8 +106,9 @@ class UserService
             $count = $this->userActivityRepo->getSumByDate($user->id, $startDate->toDateString());
             if ($count >= $requirement->required_steps ) {
                 $achieved++;
-                $totalStepsThisWeek += $count;
-                $data[] = (int) min($count, $requirement->required_steps);
+                $stepsTaken = (int) min($count, $requirement->required_steps);
+                $totalStepsThisWeek += $stepsTaken;
+                $data[] = $stepsTaken;
             }
             if($achieved == $requirement->required_period){
                 break;
@@ -115,8 +116,8 @@ class UserService
             $startDate =  $startDate->addDays(1);
         }
         $count = $this->userActivityRepo->getSumByDate($user->id, Carbon::now()->toDateString());
+        $totalStepsThisWeek += $count;
         if ($count >= $requirement->required_steps) {
-            $totalStepsThisWeek += $count;
             $achieved++;
         }
         $data[] = (int) min($count, $requirement->required_steps);

@@ -15,7 +15,7 @@ class UserActivityRepository
     {
         if (!$date2)
             return ActivityLog::where('user_id', $userId)->whereDate('created_at', $date)->groupBy('created_at')->sum('value');
-        return ActivityLog::where('user_id', $userId)->whereDate('created_at', '>=', $date)->whereDate('created_at', '<=', $date2)->sum('value');
+        return ActivityLog::where('user_id', $userId)->whereDate('created_at', '>=', $date)->whereDate('created_at', '<=', $date2)->groupBy('created_at')->sum('value');
     }
     function getOffsetByDate($userId, $date, $date2 = null)
     {
