@@ -46,7 +46,7 @@ class UserService
 
         for ($i = 0; $i < 7; $i++) {
             $startDate = Carbon::now()->subDays($daysOffset - $i);
-            $daySteps = $this->userActivityRepo->getSumByDate($userId, $startDate->format('Y-m-d'));
+            $daySteps = $this->userActivityRepo->getSumByDate($userId, $startDate->toDateString());
             $weeklySteps[] = [
                 'name' => $startDate->format('D'),
                 'value' => (int)$daySteps];
