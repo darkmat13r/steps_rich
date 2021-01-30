@@ -35,6 +35,7 @@ class UserProfileController extends Controller
     function updateHealthData(Request $request){
         Log::debug(json_encode($request->all()));
         $this->userService->updateProfile(Auth::user()->id, ['activity_level' => $request->activity_level]);
+
         $this->userHealthService->createMultiple(Auth::user()->id, $request->health_condition_ids, $request->health_condition_infos);
         return JsonResponse::success($this->userService->getProfile(Auth::user()->id));
     }

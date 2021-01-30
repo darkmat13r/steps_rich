@@ -22,8 +22,8 @@ class UserHealthConditionService
     function createMultiple($userId, $conditionIds  = [],  $conditionInfos  = []){
         if(!is_array($conditionIds)) return;
         UserHealthCondition::where('user_id', $userId)->delete();
-        foreach ($conditionIds as $key => $conditionId){
-            $this->create($userId, $conditionId, isset($conditionInfosp[$key]) ? $conditionInfos[$key] :null);
+        foreach ($conditionIds as $conditionId){
+            $this->create($userId, $conditionId, isset($conditionInfos[$conditionId]) ? $conditionInfos[$conditionId] :null);
         }
     }
 }
