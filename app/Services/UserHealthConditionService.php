@@ -9,20 +9,21 @@ use App\Models\UserHealthCondition;
 class UserHealthConditionService
 {
 
-    function create($userId, $conditionId)
+    function create($userId, $conditionId, $info  =  null)
     {
         $healthCondition = (new UserHealthCondition())->forceFill([
             'user_id' => $userId,
-            'health_condition_id'  => $conditionId
+            'health_condition_id'  => $conditionId,
+            'info'  => $info,
         ]);
         $healthCondition->save();
     }
 
-    function createMultiple($userId, $conditionIds  = []){
+    function createMultiple($userId, $conditionIds  = [],  $conditionInfos  = []){
         if(!is_array($conditionIds)) return;
         UserHealthCondition::where('user_id', $userId)->delete();
-        foreach ($conditionIds as $conditionId){
-            $this->create($userId, $conditionId);
+        foreach ($conditionIds as $key => $conditionId){
+            $this->create($userId, $conditionId, isset($conditionInfosp[$key]) ? $conditionInfos[$key] :null);
         }
     }
 }
