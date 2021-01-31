@@ -31,4 +31,9 @@ Route::get('/install', function(){
 
 });
 
+Route::get("test", function(){
+    $user = \App\Models\User::find(1);
+    (new \App\Services\UserService())->downgradeLevel($user);
+});
+
 require __DIR__.'/auth.php';
