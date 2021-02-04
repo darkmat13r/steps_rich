@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'country_code',
+        'country',
         'phone',
         'referral_code',
         'dob',

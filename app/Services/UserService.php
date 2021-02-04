@@ -104,14 +104,21 @@ class UserService
     {
         $startDayOfWeek = $user->created_at->dayOfWeek;
         $dayRemaining = Carbon::now()->dayOfWeek - $startDayOfWeek;
-        $startDate = Carbon::now()->subDays($dayRemaining);
+        $startDate = Carbon::now()->subDays($dayRemaining)->setHour(0)->setMinute(0)->setSecond(0);
         $achieved = 0;
         $totalStepsThisWeek = 0;
-        while (Carbon::now()->greaterThan($startDate)) {
+        $now = Carbon::now()->setHour(0)->setMinute(0)->setSecond(0);
+        while ($now->greaterThanOrEqualTo($startDate)) {
             $count = $this->userActivityRepo->getSumByDate($user->id, $startDate->toDateString());
             if ($count >= $requirement->required_steps) {
                 $achieved++;
-                $stepsTaken = (int)min($count, $requirement->required_steps);
+                // $stepsTaken = (int)min($count, $requirement->required_steps);
+                $stepsTaken = (int)$count;
+                $totalStepsThisWeek += $stepsTaken;
+                $data[] = $stepsTaken;
+            } else if ($now->toDateTimeString() == $startDate->toDateTimeString()) {
+
+                $stepsTaken = (int)$count;
                 $totalStepsThisWeek += $stepsTaken;
                 $data[] = $stepsTaken;
             }
@@ -120,13 +127,14 @@ class UserService
             }
             $startDate = $startDate->addDays(1);
         }
-        $count = $this->userActivityRepo->getSumByDate($user->id, Carbon::now()->toDateString());
-        $totalStepsThisWeek += $count;
-        if ($count >= $requirement->required_steps) {
-            $achieved++;
-        }
-        $data[] = (int)min($count, $requirement->required_steps);
-        for ($i = 0; $i <= $requirement->required_period - count($data); $i++) {
+        /* $count = $this->userActivityRepo->getSumByDate($user->id, Carbon::now()->toDateString());
+         $totalStepsThisWeek += $count;
+         if ($count >= $requirement->required_steps) {
+             $achieved++;
+         }
+         $data[] = (int)min($count, $requirement->required_steps);*/
+        $remaining = $requirement->required_period - count($data);
+        for ($i = 0; $i < $remaining; $i++) {
             $data[] = 0;
         }
 

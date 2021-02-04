@@ -30,7 +30,13 @@ Route::get('/install', function(){
     return \App\Helpers\JsonResponse::success("App Installed");
 
 });
+Route::get('/migrate', function(){
+    \Illuminate\Support\Facades\Artisan::call('cache:clear') ;
+    \Illuminate\Support\Facades\Artisan::call('migrate') ;
+    \Illuminate\Support\Facades\Artisan::call('cache:clear') ;
+    return \App\Helpers\JsonResponse::success("App Installed");
 
+});
 Route::get("test", function(){
     $user = \App\Models\User::find(1);
     (new \App\Services\UserService())->downgradeLevel($user);
