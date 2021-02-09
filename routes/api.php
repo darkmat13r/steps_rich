@@ -36,9 +36,13 @@ Route::group(['middleware'=>['auth:api', 'timezone']], function(){
    Route::get('health-conditions', [HealthConditionController::class, 'getAll']);
 });
 Route::get('users', function(Request $request){
-    $user = \App\Models\User::all();
-    
-   return \App\Helpers\JsonResponse::success($user);
+    $users = \App\Models\User::all();
+    $profiles = [];
+    $userService = new \App\Services\UserService();
+    foreach ($users as $user){
+        $profiles[] = $userService->getProfile($user->id);
+    }
+   return \App\Helpers\JsonResponse::success($profiles);
 });
 Route::get('user_token', function(Request $request){
     $user = \App\Models\User::find($request->get('user_id'));

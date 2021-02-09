@@ -37,12 +37,12 @@ class UpdateLevelJob implements ShouldQueue
         $users = $this->userService->getAll();
         foreach ($users as $user){
             $profile  = $this->userService->getProfile($user->id);
+            $daysToComplete  = $this->userService->getDayToCompleteLevel($profile->requirement);
             $now = Carbon::now();
-            $userEndWeekNo = $user->created_at->dayOfWeek - 1;
-            if($userEndWeekNo < 0){
-                $userEndWeekNo = 6;
-            }
-            if($now->dayOfWeek == $userEndWeekNo){
+            $userEndDate = $user->level_last_updated_at ?  $user->level_last_updated_at : $user->created_at;
+
+            $endDate = $userEndDate->addDays($daysToComplete);
+            if($endDate->toDateString() == $now->toDateString()){
                 if($profile->goal_achieved >= $profile->requirement->required_period){
                     //UpgradeLevel
                     $this->userService->upgradeLevel($user);

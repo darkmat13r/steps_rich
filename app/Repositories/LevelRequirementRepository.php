@@ -22,17 +22,28 @@ class LevelRequirementRepository
         $healthConditions = UserHealthCondition::where('user_id', $user->id)->count();
         $hasHealthCondition = $healthConditions > 0;
         $age = Carbon::createFromFormat('Y-m-d', $user->dob)->age;
+
         $requirement = new LevelRequirement();
-        $requirement->where('min_bmi', '<', $bmi)->where(function ($query) use ($bmi) {
+        $requirement = $requirement->where('min_bmi', '<', $bmi)->where(function ($query) use ($bmi) {
             return $query->where('max_bmi', '>', $bmi)->orWhereNull('max_bmi');
         });
-        $requirement->where('has_health_condition', $hasHealthCondition);
-        $requirement->where('level', $user->level+1 );
-        if (!$hasHealthCondition) {
-            $requirement->where('min_age', '<', $age)->where(function ($query) use ($age) {
-                return $query->where('max_age', '>', $age)->orWhereNull('max_age');
-            });
-        }
-        return $requirement->first();
+
+
+        $requirement =$requirement->where('has_health_condition', $hasHealthCondition);
+        $requirement =$requirement->where('level', $user->level);
+        $requirement =$requirement->where('activity_level', $user->activity_level);
+
+        $requirement =$requirement->where('min_age', '<', $age)->where(function ($query) use ($age) {
+            return $query->where('max_age', '>', $age)->orWhereNull('max_age');
+        });
+        $req = $requirement->first();
+        /*$req->user_info = [
+            'age'=>$age,
+            'activity_level' =>$user->activity_level,
+            'level'=>$user->level,
+            'bmi'=>$bmi,
+            'has_health_condition'  => $hasHealthCondition
+        ];*/
+        return $req;
     }
 }

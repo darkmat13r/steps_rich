@@ -38,8 +38,25 @@ Route::get('/migrate', function(){
 
 });
 Route::get("test", function(){
-    $user = \App\Models\User::find(1);
-    (new \App\Services\UserService())->downgradeLevel($user);
+    try{
+        \Illuminate\Support\Facades\DB::beginTransaction();
+        $all = \App\Models\LevelRequirement::all();
+        foreach($all as &$requirement){
+            $tempValue = $requirement->required_period;
+            $requirement->required_period = $requirement->required_repeat;
+            $requirement->required_repeat= $tempValue;
+
+            $tempValue2 = $requirement->minimum_period;
+            $requirement->minimum_period = $requirement->minimum_repeat;
+            $requirement->minimum_repeat =$tempValue2;
+            $requirement->save();
+        }
+        \Illuminate\Support\Facades\DB::commit();
+    }catch (\Exception $e){
+        \Illuminate\Support\Facades\DB::rollBack();
+        echo  $e->getTraceAsString();
+    }
+    echo "Su8ccess";
 });
 
 require __DIR__.'/auth.php';
