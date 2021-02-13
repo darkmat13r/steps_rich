@@ -60,12 +60,12 @@ class UpdateLevelJob implements ShouldQueue
                     ])->save();
                     //UpgradeLevel
                     $this->userService->upgradeLevel($user);
-                    Log::debug("Level Upgraded" . " of User " . Auth::id());
+                    Log::debug("Level Upgraded" . " of User " . $user->id);
 
 
                 } else if($profile->minimum_achieved >= $profile->requirement->minimum_period){
                     $this->userService->updateLastLevelUpdate($user);
-                    Log::debug("Level Maintained" . " of User " . Auth::id());
+                    Log::debug("Level Maintained" . " of User " . $user->id);
 
                 }else{
                     //Down grade level
@@ -79,12 +79,11 @@ class UpdateLevelJob implements ShouldQueue
                         ])->save();
                     }
                     $this->userService->downgradeLevel($user);
-                    Log::debug("Level Downgraded " . " of User " . Auth::id());
+                    Log::debug("Level Downgraded " . " of User " . $user->id);
 
                 }
             }
-            dd("do nothing level");
-
+            Log::debug("Nothing to do for " . " User " . $user->id);
         }
     }
 }
