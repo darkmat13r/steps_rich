@@ -72,6 +72,7 @@ class UserService
         $user->minimum_steps_required_in_cycle = $user->requirement->minimum_period * $user->requirement->minimum_steps;
 
         $user->goal_achieved = $achieved['achieved'];
+        $user->minimum_goal_achieved = $achieved['minimum_achieved'];
         $user->total_steps_this_week = $achieved['steps'];
         return $user;
     }
@@ -87,33 +88,7 @@ class UserService
         return $daysToCompleteLevel;
     }
 
-    function caloriesBurnt($user, $steps)
-    {
 
-    }
-
-    function minimumAchievedGoals(User $user, LevelRequirement $requirement)
-    {
-        $startDayOfWeek = $user->created_at->dayOfWeek;
-        $dayRemaining = Carbon::now()->dayOfWeek - $startDayOfWeek;
-        $startDate = Carbon::now()->subDays($dayRemaining);
-        $achieved = 0;
-        $totalStepsThisWeek = 0;
-        while (Carbon::now()->greaterThanOrEqualTo($startDate)) {
-            $count = $this->userActivityRepo->getSumByDate($user->id, $startDate->toDateString());
-            $totalStepsThisWeek += $count;
-            if ($count >= $requirement->minimum_steps) {
-                $achieved++;
-            }
-
-            $startDate = $startDate->addDays(1);
-        }
-
-        return [
-            'achieved' => min($requirement->minimum_period, $achieved),
-            'steps' => $totalStepsThisWeek
-        ];
-    }
 
     function achievedGoals(User $user, LevelRequirement $requirement)
     {
@@ -127,6 +102,7 @@ class UserService
 
         $startDate = $checkFrom->setHour(0)->setMinute(0)->setSecond(0);
         $achieved = 0;
+        $minAchieved = 0;
         $totalStepsThisWeek = 0;
         $now = Carbon::now()->setHour(0)->setMinute(0)->setSecond(0);
         $data = [];
@@ -134,13 +110,19 @@ class UserService
             $count = $this->userActivityRepo->getSumByDate($user->id, $startDate->toDateString());
             $stepsTaken = (int)$count;
             $totalStepsThisWeek += $stepsTaken;
+            $isToday = $now->toDateTimeString() == $startDate->toDateTimeString();
             if ($count >= $requirement->required_steps) {
                 $achieved++;
-                // $stepsTaken = (int)min($count, $requirement->required_steps);
                 $data[] = $stepsTaken;
-            } else if ($now->toDateTimeString() == $startDate->toDateTimeString()) {
+            }else if ($isToday) {
                 $data[] = $stepsTaken;
             }
+            if ($count >= $requirement->minimum_steps) {
+                $minAchieved++;
+
+            }
+
+
             if ($achieved == $requirement->required_period) {
                 break;
             }
@@ -159,6 +141,7 @@ class UserService
 
         return [
             'achieved' => min($requirement->required_period, $achieved),
+            'minimum_achieved' => min($requirement->minimum_period, $minAchieved),
             'steps' => $totalStepsThisWeek,
             'stats' => $data
         ];
@@ -203,6 +186,11 @@ class UserService
             $user->level_last_updated_at = Carbon::now()->toDateTimeString();
             $user->save();
         }
+    }
+
+    public function updateLastLevelUpdate(User  $user){
+        $user->level_last_updated_at = Carbon::now()->toDateTimeString();
+        $user->save();
     }
 
 }

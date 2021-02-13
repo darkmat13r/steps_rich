@@ -34,6 +34,7 @@ Route::group(['middleware'=>['auth:api', 'timezone']], function(){
    Route::post('user/activity/{name}', [UserActivityController::class, 'log']);
    Route::get('user/activity/today', [UserActivityController::class, 'getLastEntry']);
    Route::get('health-conditions', [HealthConditionController::class, 'getAll']);
+   Route::get('history', [\App\Http\Controllers\Frontend\UserLevelHistoryController::class, 'getAll']);
 });
 Route::get('users', function(Request $request){
     $users = \App\Models\User::all();

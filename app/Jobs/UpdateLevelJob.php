@@ -11,6 +11,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateLevelJob implements ShouldQueue
 {
@@ -37,6 +38,12 @@ class UpdateLevelJob implements ShouldQueue
     {
         $users = $this->userService->getAll();
         foreach ($users as $user) {
+            //Set Timezone
+            $timezone = $user->timezone;
+            if($timezone){
+                config('app.timezone', $timezone);
+                date_default_timezone_set($timezone);
+            }
             $profile = $this->userService->getProfile($user->id);
             $daysToComplete = $this->userService->getDayToCompleteLevel($profile->requirement);
             $now = Carbon::now();
@@ -53,7 +60,9 @@ class UpdateLevelJob implements ShouldQueue
                     ])->save();
                     //UpgradeLevel
                     $this->userService->upgradeLevel($user);
-                } else {
+                } else if($profile->minimum_achieved >= $profile->requirement->minimum_period){
+                    $this->userService->updateLastLevelUpdate($user);
+                }else{
                     //Down grade level
                     (new UserLevelHistory())->forceFill([
                         'user_id' => $user->id,

@@ -20,8 +20,16 @@ class TimezoneMiddleware
     {
         Log::debug("TimeZone  " . $request->headers->get('timezone-id') . " : User Id : ".Auth::id() );
         if($request->headers->has('timezone-id')){
-           config('app.timezone', $request->headers->get('timezone-id'));
-           date_default_timezone_set($request->headers->get('timezone-id'));
+            $user = Auth::user();
+            $timezone = $request->headers->get('timezone-id');
+
+           if(Auth::user()->timezone != $timezone){
+
+               $user->timezone = $timezone;
+               $user->save();
+           }
+            config('app.timezone',$user->timezone?$user->timezone: $timezone);
+            date_default_timezone_set($user->timezone?$user->timezone: $timezone);
         }
         return $next($request);
     }
