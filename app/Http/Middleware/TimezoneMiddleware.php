@@ -12,24 +12,30 @@ class TimezoneMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
     {
-        Log::debug("TimeZone  " . $request->headers->get('timezone-id') . " : User Id : ".Auth::id() );
-        if($request->headers->has('timezone-id')){
+        if (Auth::user()->timezone) {
+            $user = Auth::user();
+            config(['app.timezone' => $user->timezone]);
+            date_default_timezone_set($user->timezone);
+        }
+        if ($request->headers->has('timezone-id')) {
             $user = Auth::user();
             $timezone = $request->headers->get('timezone-id');
 
-           if(Auth::user()->timezone != $timezone){
+            if (Auth::user()->timezone != $timezone) {
+                Log::debug("TimeZone  " . $request->headers->get('timezone-id') . " : User Id : " . Auth::id());
 
-               $user->timezone = $timezone;
-               $user->save();
-           }
-            config('app.timezone',$user->timezone?$user->timezone: $timezone);
-            date_default_timezone_set($user->timezone?$user->timezone: $timezone);
+                $user->timezone = $timezone;
+                $user->save();
+            }
+            config(['app.timezone' => $user->timezone ? $user->timezone : $timezone]);
+            date_default_timezone_set($user->timezone ? $user->timezone : $timezone);
+
         }
         return $next($request);
     }

@@ -44,13 +44,7 @@ Route::get('/cache', function(){
 
 });
 Route::get("test", function(){
-    try{
-        $result = (new \App\Repositories\UserActivityRepository())->getLastEntryOfDate(17, \Carbon\Carbon::now());
-        dd($result);
-    }catch (\Exception $e){
-
-    }
-    echo "Su8ccess";
+    \App\Jobs\UpdateLevelJob::dispatch();
 });
 
 require __DIR__.'/auth.php';

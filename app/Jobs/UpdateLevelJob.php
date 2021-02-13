@@ -12,7 +12,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Log;
 class UpdateLevelJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
@@ -60,20 +60,31 @@ class UpdateLevelJob implements ShouldQueue
                     ])->save();
                     //UpgradeLevel
                     $this->userService->upgradeLevel($user);
+                    Log::debug("Level Upgraded" . " of User " . Auth::id());
+
+
                 } else if($profile->minimum_achieved >= $profile->requirement->minimum_period){
                     $this->userService->updateLastLevelUpdate($user);
+                    Log::debug("Level Maintained" . " of User " . Auth::id());
+
                 }else{
                     //Down grade level
-                    (new UserLevelHistory())->forceFill([
-                        'user_id' => $user->id,
-                        'steps' => $profile->total_steps_this_week,
-                        'goal' => $profile->steps_required_in_cycle,
-                        'level' => $user->level,
-                        'last_level' => $user->last_level + 1
-                    ])->save();
+                    if($user->level > 1){
+                        (new UserLevelHistory())->forceFill([
+                            'user_id' => $user->id,
+                            'steps' => $profile->total_steps_this_week,
+                            'goal' => $profile->steps_required_in_cycle,
+                            'level' => $user->level,
+                            'last_level' => $user->last_level + 1
+                        ])->save();
+                    }
                     $this->userService->downgradeLevel($user);
+                    Log::debug("Level Downgraded " . " of User " . Auth::id());
+
                 }
             }
+            dd("do nothing level");
+
         }
     }
 }

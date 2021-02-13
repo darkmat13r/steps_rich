@@ -63,8 +63,9 @@ class UserService
                 'value' => (int)$daySteps];
         }
 
+        $user->days_to_complete = $daysToCompleteLevel;
         if ($daysToCompleteLevel > 0)
-            $user->next_level_days_left = $daysToCompleteLevel - $daysDiffFromAccountCreation % $daysToCompleteLevel;
+            $user->next_level_days_left = $daysToCompleteLevel - $daysDiffFromAccountCreation % $daysToCompleteLevel -1;
         $user->weekly_stats = $weeklySteps;
         $achieved = $this->achievedGoals($user, $user->requirement);
         $user->completed = $achieved['stats'];
@@ -183,9 +184,10 @@ class UserService
     {
         if ($user->level > 1) {
             $user->level -= 1;
-            $user->level_last_updated_at = Carbon::now()->toDateTimeString();
-            $user->save();
         }
+        $user->level_last_updated_at = Carbon::now()->toDateTimeString();
+        $user->save();
+
     }
 
     public function updateLastLevelUpdate(User  $user){
