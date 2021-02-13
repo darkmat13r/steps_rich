@@ -4,6 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class TimezoneMiddleware
 {
@@ -16,7 +18,8 @@ class TimezoneMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if($request->headers->has('timezone-name')){
+        Log::debug("TimeZone  " . $request->headers->get('timezone-id') . " : User Id : ".Auth::id() );
+        if($request->headers->has('timezone-id')){
            config('app.timezone', $request->headers->get('timezone-id'));
            date_default_timezone_set($request->headers->get('timezone-id'));
         }

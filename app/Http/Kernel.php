@@ -65,4 +65,10 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'timezone' =>TimezoneMiddleware::class,
     ];
+
+    protected $middlewarePriority = [
+        \App\Http\Middleware\Authenticate::class,
+        \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        TimezoneMiddleware::class,
+    ];
 }

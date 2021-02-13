@@ -131,16 +131,13 @@ class UserService
         $data = [];
         while ($now->greaterThanOrEqualTo($startDate)) {
             $count = $this->userActivityRepo->getSumByDate($user->id, $startDate->toDateString());
+            $stepsTaken = (int)$count;
+            $totalStepsThisWeek += $stepsTaken;
             if ($count >= $requirement->required_steps) {
                 $achieved++;
                 // $stepsTaken = (int)min($count, $requirement->required_steps);
-                $stepsTaken = (int)$count;
-                $totalStepsThisWeek += $stepsTaken;
                 $data[] = $stepsTaken;
             } else if ($now->toDateTimeString() == $startDate->toDateTimeString()) {
-
-                $stepsTaken = (int)$count;
-                $totalStepsThisWeek += $stepsTaken;
                 $data[] = $stepsTaken;
             }
             if ($achieved == $requirement->required_period) {

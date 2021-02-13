@@ -13,10 +13,11 @@ class UserActivityRepository
 
     function getSumByDate($userId, $date, $date2 = null)
     {
-       $query = ActivityLog::where('user_id', $userId)->whereDate('created_at', $date)->groupBy('created_at');
-        if (!$date2)
-            return $query->sum('value');
-        return $query->whereDate('created_at', '<=', $date2)->sum('value');
+        $steps = $this->getLastEntryOfDate($userId, Carbon::createFromFormat('Y-m-d',  $date));
+        if($steps){
+            return $steps->value;
+        }
+        return 0;
     }
     function getOffsetByDate($userId, $date, $date2 = null)
     {
@@ -40,6 +41,6 @@ class UserActivityRepository
 
     public function getLastEntryOfDate($userId, Carbon $dateObj)
     {
-       return ActivityLog::where('user_id', $userId)->whereDate('created_at', $dateObj->format('Y-m-d'))->orderBy('id', 'DESC')->first();
+       return ActivityLog::where('user_id', $userId)->whereDate('created_at', $dateObj->toDateString())->orderBy('id', 'DESC')->first();
     }
 }
