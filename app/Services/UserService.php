@@ -72,9 +72,10 @@ class UserService
         $user->minimum_steps_required_in_cycle = $user->requirement->minimum_period * $user->requirement->minimum_steps;
 
         $user->goal_achieved = $achieved['achieved'];
-        $user->total_steps_this_week = min($achieved['steps'], $user->steps_required_in_cycle);
+        $user->total_steps_this_week = $achieved['steps'];
         return $user;
     }
+
 
     function getDayToCompleteLevel(LevelRequirement $requirement)
     {

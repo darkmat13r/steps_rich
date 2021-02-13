@@ -15,7 +15,17 @@ class CreateUserLevelHistoriesTable extends Migration
     {
         Schema::create('user_level_histories', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('user_id');
+            $table->integer('steps')->default(0);
+            $table->integer('goal');
+            $table->integer('level');
+            $table->integer('last_level')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 
