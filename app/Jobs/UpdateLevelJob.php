@@ -37,6 +37,7 @@ class UpdateLevelJob implements ShouldQueue
     public function handle()
     {
         $users = $this->userService->getAll();
+        Log::debug("UpdateLevelJob Will run now");
         foreach ($users as $user) {
             //Set Timezone
             $timezone = $user->timezone;
@@ -85,5 +86,6 @@ class UpdateLevelJob implements ShouldQueue
             }
             Log::debug("Nothing to do for " . " User " . $user->id);
         }
+        Log::debug("Finisihed UpdateLevelJob");
     }
 }
