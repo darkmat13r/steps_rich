@@ -44,14 +44,16 @@ class AuthService
             return;
         }
         $emptyNodeUserId = $this->findUserWithEmptyNode($fromUserId);
-        (new UserTree())->forceFill([
-            'parent_user_id' => $emptyNodeUserId,
-            'child_user_id' => $userId,
-            'referred_by' => $fromUserId
-        ])->save();
+        if($emptyNodeUserId){
+            (new UserTree())->forceFill([
+                'parent_user_id' => $emptyNodeUserId['user_id'],
+                'child_user_id' => $userId,
+                'referred_by' => $fromUserId
+            ])->save();
+        }
     }
 
-    function findUserWithEmptyNode($userId){
+   /* function findUserWithEmptyNode($userId){
         $maxUserAllowed = \setting(Setting::MAX_ALLOW_CHILD);
         $userNodes = UserTree::where('parent_user_id', $userId)->get();
         if($userNodes->count() <  $maxUserAllowed){
@@ -59,6 +61,25 @@ class AuthService
         }
         foreach ($userNodes as $node){
             $this->findUserWithEmptyNode($node->child_user_id);
+        }
+    }*/
+
+    public function findUserWithEmptyNode($userId,$index =0, $level = 0){
+        $maxUserAllowed = \setting(Setting::MAX_ALLOW_CHILD);
+        $userNodes = UserTree::where('parent_user_id', $userId)->get();
+        if($userNodes->count() <  $maxUserAllowed){
+            return [
+                'user_id' => $userId,
+                'level' => $level,
+                'index' => $index
+            ];
+        }
+        $level++;
+        foreach ($userNodes as $index => $node){
+            $childUserId =  $this->findUserWithEmptyNode($node->child_user_id,$index, $level);
+            if($childUserId && ($childUserId['level'] <= $level || $childUserId['index'] <  $index)){
+                return $childUserId;
+            }
         }
     }
 
