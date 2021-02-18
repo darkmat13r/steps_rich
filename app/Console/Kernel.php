@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-         $schedule->command('level:upgrade')->dailyAt("00:20");
+         $schedule->command('level:upgrade')->dailyAt("00:20")->timezone('Asia/Kuala_Lumpur');
     }
 
     /**
