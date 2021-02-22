@@ -25,6 +25,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+
+        //Log::info("Cron Is Running");
          $schedule->command('level:upgrade')->dailyAt("00:20")->timezone('Asia/Kuala_Lumpur');
     }
 
