@@ -52,7 +52,7 @@ class UserService
 
         $checkFrom = $user->level_last_updated_at ? $user->level_last_updated_at : $user->created_at;
         $daysDiffFromAccountCreation = $checkFrom->diffInDays(Carbon::now());
-        $daysOffset = $daysDiffFromAccountCreation % 7;
+        $daysOffset = $daysDiffFromAccountCreation % 7 +1;
         $weeklySteps = [];
 
         for ($i = 0; $i < 7; $i++) {
