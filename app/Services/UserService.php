@@ -55,20 +55,21 @@ class UserService
         $daysOffset = $daysDiffFromAccountCreation % 7 +1;
         $weeklySteps = [];
 
-        for ($i = 0; $i < 7; $i++) {
+       /* for ($i = 0; $i < 7; $i++) {
             $startDate = Carbon::now()->subDays($daysOffset - $i);
             $daySteps = $this->userActivityRepo->getSumByDate($userId, $startDate->toDateString());
             $weeklySteps[] = [
                 'name' => $startDate->format('D'),
                 'value' => (int)$daySteps];
-        }
+        }*/
 
         $user->days_to_complete = $daysToCompleteLevel;
         if ($daysToCompleteLevel > 0)
             $user->next_level_days_left = $daysToCompleteLevel - $daysDiffFromAccountCreation % $daysToCompleteLevel -1;
-        $user->weekly_stats = $weeklySteps;
+
         $achieved = $this->achievedGoals($user, $user->requirement);
         $user->completed = $achieved['stats'];
+        $user->weekly_stats = $achieved['weekly_steps'];
         $user->steps_required_in_cycle = $user->requirement->required_period * $user->requirement->required_steps;
         $user->minimum_steps_required_in_cycle = $user->requirement->minimum_period * $user->requirement->minimum_steps;
 
@@ -107,6 +108,7 @@ class UserService
         $totalStepsThisWeek = 0;
         $now = Carbon::now()->setHour(0)->setMinute(0)->setSecond(0);
         $data = [];
+        $weeklySteps = [];
         while ($now->greaterThanOrEqualTo($startDate)) {
             $count = $this->userActivityRepo->getSumByDate($user->id, $startDate->toDateString());
             $stepsTaken = (int)$count;
@@ -122,12 +124,22 @@ class UserService
                 $minAchieved++;
 
             }
-
+            $weeklySteps[] = [
+                'name' => $startDate->format('D'),
+                'value' => (int)$stepsTaken];
 
             if ($achieved == $requirement->required_period) {
                 break;
             }
             $startDate = $startDate->addDays(1);
+        }
+
+        for($i = 0;$i< $daysLeft-1 ; $i++){
+
+            $weeklySteps[] = [
+                'name' => $startDate->format('D'),
+                'value' => 0];
+            $startDate =    $startDate->addDays(1);
         }
         /* $count = $this->userActivityRepo->getSumByDate($user->id, Carbon::now()->toDateString());
          $totalStepsThisWeek += $count;
@@ -144,7 +156,8 @@ class UserService
             'achieved' => min($requirement->required_period, $achieved),
             'minimum_achieved' => min($requirement->minimum_period, $minAchieved),
             'steps' => $totalStepsThisWeek,
-            'stats' => $data
+            'stats' => $data,
+            'weekly_steps' =>$weeklySteps
         ];
     }
 
