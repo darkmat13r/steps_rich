@@ -65,7 +65,7 @@ class UserService
 
         $user->days_to_complete = $daysToCompleteLevel;
         if ($daysToCompleteLevel > 0)
-            $user->next_level_days_left = $daysToCompleteLevel - $daysDiffFromAccountCreation % $daysToCompleteLevel - 1;
+            $user->next_level_days_left = $daysToCompleteLevel - $daysDiffFromAccountCreation % $daysToCompleteLevel;
 
         try {
             $achieved = $this->achievedGoals($user, $user->requirement);
