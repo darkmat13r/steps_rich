@@ -51,26 +51,19 @@ class UserService
         $user->daily_steps_date = $currentDate;
 
         $checkFrom = $user->level_last_updated_at ? $user->level_last_updated_at : $user->created_at;
-        $daysDiffFromAccountCreation = $checkFrom->diffInDays(Carbon::now());
-        $daysOffset = $daysDiffFromAccountCreation % 7 + 1;
-        $weeklySteps = [];
+        $checkFrom = Carbon::createFromFormat('Y-m-d', $checkFrom->toDateString());
 
-        /* for ($i = 0; $i < 7; $i++) {
-             $startDate = Carbon::now()->subDays($daysOffset - $i);
-             $daySteps = $this->userActivityRepo->getSumByDate($userId, $startDate->toDateString());
-             $weeklySteps[] = [
-                 'name' => $startDate->format('D'),
-                 'value' => (int)$daySteps];
-         }*/
+        $daysDiffFromAccountCreation = $checkFrom->diffInDays(null , false);
+
 
         $user->days_to_complete = $daysToCompleteLevel;
-        if ($daysToCompleteLevel > 0)
-            $user->next_level_days_left = $daysToCompleteLevel - $daysDiffFromAccountCreation % $daysToCompleteLevel;
+        $user->days_from_last_update = $daysDiffFromAccountCreation;
+        $user->next_level_days_left = $daysToCompleteLevel - $daysDiffFromAccountCreation;
 
         try {
             $achieved = $this->achievedGoals($user, $user->requirement);
         } catch (\Exception $exception) {
-            dd($exception->getTraceAsString());
+           // dd($exception->getTraceAsString());
         }
         $user->completed = $achieved['stats'];
         $user->weekly_stats = $achieved['weekly_steps'];
@@ -99,6 +92,8 @@ class UserService
     {
         $daysToCompleteLevel = $this->getDayToCompleteLevel($requirement);
         $checkFrom = $user->level_last_updated_at ? $user->level_last_updated_at : $user->created_at;
+        $checkFrom = Carbon::createFromFormat('Y-m-d', $checkFrom->toDateString());
+
         $daysDiffFromAccountCreation = $checkFrom->diffInDays(Carbon::now());
 
         $daysLeft = $daysToCompleteLevel - $daysDiffFromAccountCreation % $daysToCompleteLevel;
@@ -133,6 +128,7 @@ class UserService
             $startDate = $startDate->addDays(1);
         }
         $checkFrom = $user->level_last_updated_at ? $user->level_last_updated_at : $user->created_at;
+        $checkFrom = Carbon::createFromFormat('Y-m-d', $checkFrom->toDateString());
 
         $startDate = $checkFrom;
 
