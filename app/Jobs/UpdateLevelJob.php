@@ -58,7 +58,7 @@ class UpdateLevelJob implements ShouldQueue
                             'steps' => $profile->total_steps_this_week,
                             'goal' => $profile->steps_required_in_cycle,
                             'level' => $user->level,
-                            'last_level' => $user->last_level - 1
+                            'last_level' => $user->level - 1
                         ])->save();
                         //UpgradeLevel
                         $this->userService->upgradeLevel($user);
@@ -77,7 +77,7 @@ class UpdateLevelJob implements ShouldQueue
                                 'steps' => $profile->total_steps_this_week,
                                 'goal' => $profile->steps_required_in_cycle,
                                 'level' => $user->level,
-                                'last_level' => $user->last_level + 1
+                                'last_level' => $user->level + 1
                             ])->save();
                         }
                         $this->userService->downgradeLevel($user);
