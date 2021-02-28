@@ -39,6 +39,7 @@ class UpdateLevelJob implements ShouldQueue
         $users = $this->userService->getAll();
         Log::debug("UpdateLevelJob Will run now");
         foreach ($users as $user) {
+
             //Set Timezone
             $timezone = $user->timezone;
             if($timezone){
@@ -48,10 +49,10 @@ class UpdateLevelJob implements ShouldQueue
             try{
                 $profile = $this->userService->getProfile($user->id);
                 $daysToComplete = $this->userService->getDayToCompleteLevel($profile->requirement);
-                $now = Carbon::now();
+                $now = Carbon::createFromFormat("Y-m-d", Carbon::now()->toDateString());
                 $userEndDate = $user->level_last_updated_at ? $user->level_last_updated_at : $user->created_at;
-                $endDate = $userEndDate->addDays($daysToComplete);
-                if ($now->gt($endDate)) {
+                $endDate = Carbon::createFromFormat('Y-m-d', $userEndDate->toDateString())->addDays($daysToComplete);
+                if ($now->greaterThanOrEqualTo($endDate)) {
                     if ($profile->goal_achieved >= $profile->requirement->required_period) {
                         (new UserLevelHistory())->forceFill([
                             'user_id' => $user->id,
