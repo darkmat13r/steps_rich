@@ -93,7 +93,7 @@ class UserService
         $daysToCompleteLevel = $this->getDayToCompleteLevel($requirement);
         $checkFrom = $user->level_last_updated_at ? $user->level_last_updated_at : $user->created_at;
         $checkFrom = Carbon::createFromFormat('Y-m-d', $checkFrom->toDateString());
-
+        $endDate = Carbon::createFromFormat('Y-m-d', $checkFrom->toDateString())->addDays($daysToCompleteLevel-1);
         $daysDiffFromAccountCreation = $checkFrom->diffInDays(Carbon::now());
 
         $daysLeft = $daysToCompleteLevel - $daysDiffFromAccountCreation % $daysToCompleteLevel;
@@ -105,11 +105,13 @@ class UserService
         $now = Carbon::now()->setHour(0)->setMinute(0)->setSecond(0);
         $data = [];
         $weeklySteps = [];
-        while ($now->greaterThanOrEqualTo($startDate)) {
+
+        while ($now->greaterThanOrEqualTo($startDate) && $startDate->lessThanOrEqualTo($endDate)) {
             $count = $this->userActivityRepo->getSumByDate($user->id, $startDate->toDateString());
             $stepsTaken = (int)$count;
             $totalStepsThisWeek += $stepsTaken;
             $isToday = $now->toDateTimeString() == $startDate->toDateTimeString();
+
             if ($count >= $requirement->required_steps) {
                 $achieved++;
                 $data[] = $stepsTaken;
@@ -142,6 +144,7 @@ class UserService
            $startDate->addDays(1);
            $i++;
         }
+
 
         /* $count = $this->userActivityRepo->getSumByDate($user->id, Carbon::now()->toDateString());
          $totalStepsThisWeek += $count;

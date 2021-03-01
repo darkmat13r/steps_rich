@@ -48,6 +48,9 @@ class UpdateLevelJob implements ShouldQueue
             }
             try{
                 $profile = $this->userService->getProfile($user->id);
+                Log::info("==================Start PROFILE==================");
+                Log::info(json_encode($profile));
+                Log::info("==================End PROFILE==================");
                 $daysToComplete = $this->userService->getDayToCompleteLevel($profile->requirement);
                 $now = Carbon::createFromFormat("Y-m-d", Carbon::now()->toDateString());
                 $userEndDate = $user->level_last_updated_at ? $user->level_last_updated_at : $user->created_at;
@@ -58,18 +61,15 @@ class UpdateLevelJob implements ShouldQueue
                             'user_id' => $user->id,
                             'steps' => $profile->total_steps_this_week,
                             'goal' => $profile->steps_required_in_cycle,
-                            'level' => $user->level,
-                            'last_level' => $user->level - 1
+                            'level' => $user->level+1,
+                            'last_level' => $user->level
                         ])->save();
                         //UpgradeLevel
                         $this->userService->upgradeLevel($user);
                         Log::debug("Level Upgraded" . " of User " . $user->id);
-
-
                     } else if($profile->minimum_achieved >= $profile->requirement->minimum_period){
                         $this->userService->updateLastLevelUpdate($user);
                         Log::debug("Level Maintained" . " of User " . $user->id);
-
                     }else{
                         //Down grade level
                         if($user->level > 1){
@@ -77,8 +77,8 @@ class UpdateLevelJob implements ShouldQueue
                                 'user_id' => $user->id,
                                 'steps' => $profile->total_steps_this_week,
                                 'goal' => $profile->steps_required_in_cycle,
-                                'level' => $user->level,
-                                'last_level' => $user->level + 1
+                                'level' => $user->level-1,
+                                'last_level' => $user->level
                             ])->save();
                         }
                         $this->userService->downgradeLevel($user);
