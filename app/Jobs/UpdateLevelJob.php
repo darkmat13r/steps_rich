@@ -73,13 +73,13 @@ class UpdateLevelJob implements ShouldQueue
                     }else{
                         //Down grade level
                         if($user->level > 1){
-                            (new UserLevelHistory())->forceFill([
+                           /* (new UserLevelHistory())->forceFill([
                                 'user_id' => $user->id,
                                 'steps' => $profile->total_steps_this_week,
                                 'goal' => $profile->steps_required_in_cycle,
                                 'level' => $user->level-1,
                                 'last_level' => $user->level
-                            ])->save();
+                            ])->save();*/
                         }
                         $this->userService->downgradeLevel($user);
                         Log::debug("Level Downgraded " . " of User " . $user->id);
