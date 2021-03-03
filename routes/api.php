@@ -41,7 +41,11 @@ Route::get('users', function(Request $request){
     $profiles = [];
     $userService = new \App\Services\UserService();
     foreach ($users as $user){
-        $profiles[] = $userService->getProfile($user->id);
+        try{
+            $profiles[] = $userService->getProfile($user->id);
+        }catch (\Exception $e){
+
+        }
     }
    return \App\Helpers\JsonResponse::success($profiles);
 });
