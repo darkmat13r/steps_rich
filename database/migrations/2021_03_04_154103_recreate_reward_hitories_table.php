@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRewardHistoriesTable extends Migration
+class RecreateRewardHitoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateRewardHistoriesTable extends Migration
      */
     public function up()
     {
+
         Schema::create('reward_histories', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->integer('user_level');
+            $table->integer('user_step_level');
             $table->unsignedBigInteger('from_id');
-            $table->integer('from_level');
             $table->integer('from_tree_level');
-            $table->integer('from_step_level');
             $table->decimal('amount', 10, 2);
             $table->timestamps();
 
@@ -43,6 +42,6 @@ class CreateRewardHistoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reward_histories');
+        //
     }
 }

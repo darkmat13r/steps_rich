@@ -8,10 +8,13 @@
             <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
           </mappings>
           <excludedPaths>
-            <excludedPath path="/.env" />
             <excludedPath path="/vendor" />
             <excludedPath path="/node_modules" />
             <excludedPath path="/bootstrap" />
+            <excludedPath path="/storage" />
+            <excludedPath path="/resources" />
+            <excludedPath path="/public" />
+            <excludedPath path="/.env" />
           </excludedPaths>
         </serverdata>
       </paths>

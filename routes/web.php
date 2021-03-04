@@ -37,6 +37,13 @@ Route::get('/install', function(){
     return \App\Helpers\JsonResponse::success("App Installed");
 
 });
+Route::get('/seed', function(){
+    \Illuminate\Support\Facades\Artisan::call('cache:clear') ;
+    \Illuminate\Support\Facades\Artisan::call('db:seed --class=RewardSettingsSeeder') ;
+    \Illuminate\Support\Facades\Artisan::call('db:seed --class=RoleSeeder') ;
+    \Illuminate\Support\Facades\Artisan::call('cache:clear') ;
+    return \App\Helpers\JsonResponse::success("Seeding Complete");
+});
 Route::get('/migrate', function(){
     \Illuminate\Support\Facades\Artisan::call('cache:clear') ;
     \Illuminate\Support\Facades\Artisan::call('migrate') ;

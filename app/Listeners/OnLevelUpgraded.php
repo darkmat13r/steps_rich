@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\LevelUpgraded;
+use App\Jobs\AddRewards;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
@@ -26,6 +27,7 @@ class OnLevelUpgraded
      */
     public function handle(LevelUpgraded $event)
     {
-        //
+
+        AddRewards::dispatch($event->user);
     }
 }
