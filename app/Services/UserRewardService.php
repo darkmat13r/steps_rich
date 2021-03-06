@@ -27,18 +27,13 @@ class UserRewardService
         //Own income
         $currentLevel = 0;
         $userLevel = $user->level-1;
-        Log::info("=================Start Reward ==================");
-        Log::info('User Level ' . $user->level);
         if( $userLevel == 1){
             $rewardSettings = RewardSetting::where('step_level',$userLevel )
                 ->where('tree_level', $currentLevel)->first();
-            Log::info("Current Level " . $currentLevel);
-            Log::info("User level test " . $userLevel);
+
             if ($rewardSettings) {
-                Log::info("Reward Settings found " . json_encode($rewardSettings));
                 //Check if he has already earned that reward
                 $rewardHistory = $this->rewardHistoryRepo->getReward($user,  $user, $currentLevel);
-                Log::info("Did User get reward for  : User name " . $user->email . " " . $currentLevel . " - " . ($rewardHistory != null));
                 if (!$rewardHistory) {
                     $this->rewardHistoryRepo->addReward($user,  $user, $currentLevel, $rewardSettings->reward);
                 }
@@ -54,7 +49,6 @@ class UserRewardService
             ->where('step_level', $user->level)
             ->first();
         $lastUser = $user;
-        Log::info("NextReward Setting  : " . json_encode($nextRewardSetting));
         while ($userTree && $nextRewardSetting) {
             $nextUser = User::find($userTree->parent_user_id);
 
@@ -70,7 +64,6 @@ class UserRewardService
             $userTree = UserTree::where('child_user_id', $nextUser->id)->first();
             $lastUser = $nextUser;
         }
-        Log::info("=================End Reward ==================");
     }
 
 }

@@ -4,6 +4,7 @@
 namespace App\Repositories;
 
 
+use App\Events\RewardAdded;
 use App\Models\RewardHistory;
 use App\Models\User;
 
@@ -28,6 +29,7 @@ class RewardHistoryRepository
             'amount' => $amount
         ]);
         $reward->save();
+        event(new RewardAdded($reward));
         return $reward;
     }
 }
