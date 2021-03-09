@@ -20,6 +20,7 @@ class RegisterController extends Controller
 
     function register(Request $request)
     {
+        return JsonResponse::errors("Registration is disabled for now.");
         $validator = Validator::make($request->all(), [
             'username' => ['required', 'email', 'unique:users,email'],
             'password' => ['required'],

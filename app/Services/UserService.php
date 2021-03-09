@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\Events\LevelUpgraded;
 use App\Exceptions\GeneralException;
 use App\Models\ActivityLog;
 use App\Models\LevelRequirement;
@@ -196,6 +197,7 @@ class UserService
         $user->level += 1;
         $user->level_last_updated_at = Carbon::now()->toDateTimeString();
         $user->save();
+        event(new LevelUpgraded($user));
     }
 
     public function downgradeLevel(User $user)
