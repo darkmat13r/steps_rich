@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasApiTokens;
+    use HasFactory, Notifiable, HasApiTokens, HasRoles;
 
     protected $dates = ['created_at', 'first_cycle_started_at','level_last_updated_at'];
     /**
@@ -64,5 +65,9 @@ class User extends Authenticatable
 
     function healthConditions(){
         return $this->hasMany(UserHealthCondition::class);
+    }
+
+    function rewards(){
+        return $this->hasMany(RewardHistory::class,'user_id');
     }
 }

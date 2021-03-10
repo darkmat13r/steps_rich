@@ -15,10 +15,12 @@ class DatabaseSeeder extends Seeder
     {
        // \App\Models\User::factory(10)->create();
         $this->call([
-            HealthConditionsSeeder::class,
-            SettingsSeeder::class,
-            HealthyNBmiLessThan25Inactive::class,
-            HealthyNBmiLessThan25Moderate::class
+//            RoleSeeder::class,
+            UserSeeder::class,
+//            HealthConditionsSeeder::class,
+//            SettingsSeeder::class,
+//            HealthyNBmiLessThan25Inactive::class,
+//            HealthyNBmiLessThan25Moderate::class
         ]);
     }
 }
