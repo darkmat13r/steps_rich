@@ -62,38 +62,9 @@ Route::get('user_token', function(Request $request){
 
 
 Route::get('test_reward', function (){
-    $faker = Factory::create();
+    $user = \App\Models\User::find(10);
+    $user = (new \App\Repositories\RewardHistoryRepository())
+        ->addReward($user, $user, 0, 10);
 
-    $userCount = 0;
-    $users = [];
-    DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-    \App\Models\RewardHistory::truncate();
-    \App\Models\UserTree::truncate();
-    \App\Models\User::truncate();
-    DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-    $lastReferralCode = null;
-   while($userCount < 4){
-        $user = (new AuthService())->register([
-            'country_code' => $faker->countryCode,
-            'username' => $faker->email,
-            'phone' => $faker->phoneNumber,
-            'password' => 'password',
-            'country'=>$faker->country,
-            'device_id' =>$faker->text,
-            'referral_code' => $lastReferralCode
-        ]);
-        $lastReferralCode = $user->referral_code;
-        unset($user->access_token);
-        $users[] = $user;
-        $userCount++;
-    }
-    $users = \App\Models\User::all();
-    //Shuffle Users
-
-    $userService = new \App\Services\UserService();
-
-    foreach ($users as $user){
-        $userService->upgradeLevel($user);
-        event(new \App\Events\LevelUpgraded($user));
-    }
+    dd($user);
 });

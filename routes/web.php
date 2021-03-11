@@ -12,8 +12,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\LevelRequirementController;
 use App\Http\Controllers\Admin\RewardController;
 
-use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\LevelRequirementController;
+
 
 
 /*

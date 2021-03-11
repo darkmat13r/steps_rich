@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\RewardAdded;
+use App\Models\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
@@ -28,5 +29,10 @@ class OnRewardAdded
     {
         //DO reward thing here
         $reward = $event->reward;
+        $user = User::find($reward->user_id);
+        if($user){
+            $user->wallet_amount += $reward->amount;
+            $user->save();
+        }
     }
 }

@@ -47,8 +47,10 @@
                                     </p>
                                 </div>
                                 <div class="my-lg-0 my-3 text-center">
-                                    <span
-                                        class="btn btn-dark font-weight-bolder text-uppercase">Level : {{$profileData->level}}</span><br>
+                                    <div class="d-flex">
+                                        <span class="btn btn-danger font-weight-bolder text-uppercase">Level : {{$profileData->level}}</span>
+                                        <span class="btn btn-dark font-weight-bolder text-uppercase ml-2">Reward Income : {{$data->rewards->sum('amount')}}</span>
+                                    </div>
                                     <span>Last updated at : {{$profileData->level_last_updated_at}}</span>
                                 </div>
                             </div>
@@ -63,8 +65,11 @@
                                         <p class="text-dark-50 text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
                                             <i class="fas fa-phone-alt text-primary mr-2 font-size-lg"></i>{{$data->country_code.' '.$data->phone}}
                                         </p>
-                                        <p class="text-dark-50 text-hover-primary font-weight-bold">
+                                        <p class="text-dark-50 text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
                                             <i class="fas fa-globe-americas text-primary mr-2 font-size-lg"></i>{{$data->country}}
+                                        </p>
+                                        <p class="text-dark-50 text-hover-primary font-weight-bold">
+                                            <i class="fas fa-user text-primary mr-2 font-size-lg"></i>Referred By : {{$referredBy}}
                                         </p>
                                     </div>
                                 </div>
@@ -366,37 +371,37 @@
                                     @foreach($downLine as $row)
                                         <tr>
                                             <td>
-                                                <a href="mailto:{{$row->email}}" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">
-                                                    {{$row->name}}
+                                                <a href="mailto:{{$row->child->email}}" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">
+                                                    {{$row->child->name}}
                                                 </a>
                                                 <div>
                                                     <span class="font-weight-bolder">Email:</span>
                                                     <a class="text-muted font-weight-bold text-hover-primary"
-                                                       href="mailto:{{$row->email}}">{{$row->email}}</a>
+                                                       href="mailto:{{$row->child->email}}">{{$row->child->email}}</a>
                                                 </div>
                                             </td>
                                             <td>
                                                 <span class="text-muted font-weight-bold">Level</span>
-                                                <span class="text-dark-75 font-weight-bolder d-block font-size-lg">{{$row->level}}</span>
+                                                <span class="text-dark-75 font-weight-bolder d-block font-size-lg">{{$row->child->level}}</span>
                                             </td>
                                             <td>
-                                                <span class="text-dark-75 font-weight-bolder d-block font-size-lg">{{$row->steps_goal}}</span>
+                                                <span class="text-dark-75 font-weight-bolder d-block font-size-lg">{{$row->child->steps_goal}}</span>
                                                 <span class="text-muted font-weight-bold">Steps Goal</span>
                                             </td>
                                             <td>
-                                                <span class="text-muted font-weight-500">{{$row->country_code .' '. $row->phone}}</span>
+                                                <span class="text-muted font-weight-500">{{$row->child->country_code .' '. $row->child->phone}}</span>
                                             </td>
                                             <td>
-                                                @if($row->activity_level == 'active')
-                                                    <span class="label label-lg label-light-success label-inline">{{ucfirst($row->activity_level)}}</span>
-                                                @elseif($row->activity_level == 'inactive')
-                                                    <span class="label label-lg label-light-danger label-inline">{{ucfirst($row->activity_level)}}</span>
+                                                @if($row->child->activity_level == 'active')
+                                                    <span class="label label-lg label-light-success label-inline">{{ucfirst($row->child->activity_level)}}</span>
+                                                @elseif($row->child->activity_level == 'inactive')
+                                                    <span class="label label-lg label-light-danger label-inline">{{ucfirst($row->child->activity_level)}}</span>
                                                 @else
-                                                    <span class="label label-lg label-light-warning label-inline">{{ucfirst($row->activity_level)}}</span>
+                                                    <span class="label label-lg label-light-warning label-inline">{{ucfirst($row->child->activity_level)}}</span>
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="{{url('admin/users/view',$row->id)}}" class="btn btn-icon btn-light btn-hover-primary btn-sm">
+                                                <a href="{{url('admin/users/view',$row->child->id)}}" class="btn btn-icon btn-light btn-hover-primary btn-sm">
                                                     <i class="fa fa-eye"></i>
                                                 </a>
                                             </td>

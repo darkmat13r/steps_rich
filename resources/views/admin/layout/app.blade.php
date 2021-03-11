@@ -19,8 +19,6 @@
           type="text/css"/>
     <link href="{{asset('admin/css/themes/layout/brand/darkd1cf.css?v=7.1.6')}}" rel="stylesheet" type="text/css"/>
     <link href="{{asset('admin/css/themes/layout/aside/darkd1cf.css?v=7.1.6')}}" rel="stylesheet" type="text/css"/>
-    <link rel="shortcut icon"
-          href="https://preview.keenthemes.com/metronic/theme/html/demo1/dist/assets/media/logos/favicon.ico"/>
     @stack('headerscript')
 </head>
 <body id="kt_body"
@@ -137,7 +135,7 @@
         <!--begin::Header-->
         <div class="d-flex align-items-center mt-5">
             <div class="symbol symbol-100 mr-5">
-                <div class="symbol-label" style="background-image:url({{asset('admin/media/users/300_21.jpg')}})"></div>
+                <div class="symbol-label" style="background-image:url({{asset('admin/media/users/blank.png')}})"></div>
                 <i class="symbol-badge bg-success"></i>
             </div>
             <div class="d-flex flex-column">
@@ -216,8 +214,6 @@
     <!--end::Content-->
 </div>
 <!-- end::User Panel-->
-<script>var HOST_URL = "https://preview.keenthemes.com/metronic/theme/html/tools/preview";</script>
-<!--begin::Global Theme Bundle(used by all pages)-->
 <script src="{{asset('admin/plugins/global/plugins.bundled1cf.js?v=7.1.6')}}"></script>
 <script src="{{asset('admin/plugins/custom/prismjs/prismjs.bundled1cf.js?v=7.1.6')}}"></script>
 <script src="{{asset('admin/js/scripts.bundled1cf.js?v=7.1.6')}}"></script>
@@ -225,9 +221,6 @@
 <!--begin::Page Vendors(used by this page)-->
 <script src="{{asset('admin/plugins/custom/fullcalendar/fullcalendar.bundled1cf.js?v=7.1.6')}}"></script>
 <!--end::Page Vendors-->
-<!--begin::Page Scripts(used by this page)-->
-<script src="{{asset('admin/js/pages/widgetsd1cf.js?v=7.1.6')}}"></script>
-<!--end::Page Scripts-->
 @stack('footerscript')
 @include('common.notification')
 </body>

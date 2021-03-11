@@ -32,198 +32,8 @@
                         <!--begin::Body-->
                         <div class="card-body p-0 position-relative overflow-hidden">
                             <!--begin::Chart-->
-                            <div id="kt_mixed_widget_1_chart" class="card-rounded-bottom bg-danger"
-                                 style="height: 200px; min-height: 200px;">
-                                <div id="apexchartszsn71zli"
-                                     class="apexcharts-canvas apexchartszsn71zli apexcharts-theme-light"
-                                     style="width: 505px; height: 200px;">
-                                    <svg id="SvgjsSvg1249" width="505" height="200" xmlns="http://www.w3.org/2000/svg"
-                                         version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                         xmlns:svgjs="http://svgjs.com/svgjs" class="apexcharts-svg"
-                                         xmlns:data="ApexChartsNS" transform="translate(0, 0)"
-                                         style="background: transparent;">
-                                        <g id="SvgjsG1251" class="apexcharts-inner apexcharts-graphical"
-                                           transform="translate(0, 0)">
-                                            <defs id="SvgjsDefs1250">
-                                                <clipPath id="gridRectMaskzsn71zli">
-                                                    <rect id="SvgjsRect1254" width="512" height="203" x="-3.5" y="-1.5"
-                                                          rx="0" ry="0" opacity="1" stroke-width="0" stroke="none"
-                                                          stroke-dasharray="0" fill="#fff"></rect>
-                                                </clipPath>
-                                                <clipPath id="gridRectMarkerMaskzsn71zli">
-                                                    <rect id="SvgjsRect1255" width="509" height="204" x="-2" y="-2"
-                                                          rx="0" ry="0" opacity="1" stroke-width="0" stroke="none"
-                                                          stroke-dasharray="0" fill="#fff"></rect>
-                                                </clipPath>
-                                                <filter id="SvgjsFilter1261" filterUnits="userSpaceOnUse" width="200%"
-                                                        height="200%" x="-50%" y="-50%">
-                                                    <feFlood id="SvgjsFeFlood1262" flood-color="#d13647"
-                                                             flood-opacity="0.5" result="SvgjsFeFlood1262Out"
-                                                             in="SourceGraphic"></feFlood>
-                                                    <feComposite id="SvgjsFeComposite1263" in="SvgjsFeFlood1262Out"
-                                                                 in2="SourceAlpha" operator="in"
-                                                                 result="SvgjsFeComposite1263Out"></feComposite>
-                                                    <feOffset id="SvgjsFeOffset1264" dx="0" dy="5"
-                                                              result="SvgjsFeOffset1264Out"
-                                                              in="SvgjsFeComposite1263Out"></feOffset>
-                                                    <feGaussianBlur id="SvgjsFeGaussianBlur1265" stdDeviation="3 "
-                                                                    result="SvgjsFeGaussianBlur1265Out"
-                                                                    in="SvgjsFeOffset1264Out"></feGaussianBlur>
-                                                    <feMerge id="SvgjsFeMerge1266" result="SvgjsFeMerge1266Out"
-                                                             in="SourceGraphic">
-                                                        <feMergeNode id="SvgjsFeMergeNode1267"
-                                                                     in="SvgjsFeGaussianBlur1265Out"></feMergeNode>
-                                                        <feMergeNode id="SvgjsFeMergeNode1268"
-                                                                     in="[object Arguments]"></feMergeNode>
-                                                    </feMerge>
-                                                    <feBlend id="SvgjsFeBlend1269" in="SourceGraphic"
-                                                             in2="SvgjsFeMerge1266Out" mode="normal"
-                                                             result="SvgjsFeBlend1269Out"></feBlend>
-                                                </filter>
-                                                <filter id="SvgjsFilter1271" filterUnits="userSpaceOnUse" width="200%"
-                                                        height="200%" x="-50%" y="-50%">
-                                                    <feFlood id="SvgjsFeFlood1272" flood-color="#d13647"
-                                                             flood-opacity="0.5" result="SvgjsFeFlood1272Out"
-                                                             in="SourceGraphic"></feFlood>
-                                                    <feComposite id="SvgjsFeComposite1273" in="SvgjsFeFlood1272Out"
-                                                                 in2="SourceAlpha" operator="in"
-                                                                 result="SvgjsFeComposite1273Out"></feComposite>
-                                                    <feOffset id="SvgjsFeOffset1274" dx="0" dy="5"
-                                                              result="SvgjsFeOffset1274Out"
-                                                              in="SvgjsFeComposite1273Out"></feOffset>
-                                                    <feGaussianBlur id="SvgjsFeGaussianBlur1275" stdDeviation="3 "
-                                                                    result="SvgjsFeGaussianBlur1275Out"
-                                                                    in="SvgjsFeOffset1274Out"></feGaussianBlur>
-                                                    <feMerge id="SvgjsFeMerge1276" result="SvgjsFeMerge1276Out"
-                                                             in="SourceGraphic">
-                                                        <feMergeNode id="SvgjsFeMergeNode1277"
-                                                                     in="SvgjsFeGaussianBlur1275Out"></feMergeNode>
-                                                        <feMergeNode id="SvgjsFeMergeNode1278"
-                                                                     in="[object Arguments]"></feMergeNode>
-                                                    </feMerge>
-                                                    <feBlend id="SvgjsFeBlend1279" in="SourceGraphic"
-                                                             in2="SvgjsFeMerge1276Out" mode="normal"
-                                                             result="SvgjsFeBlend1279Out"></feBlend>
-                                                </filter>
-                                            </defs>
-                                            <g id="SvgjsG1280" class="apexcharts-xaxis" transform="translate(0, 0)">
-                                                <g id="SvgjsG1281" class="apexcharts-xaxis-texts-g"
-                                                   transform="translate(0, -4)"></g>
-                                            </g>
-                                            <g id="SvgjsG1283" class="apexcharts-grid">
-                                                <g id="SvgjsG1284" class="apexcharts-gridlines-horizontal"
-                                                   style="display: none;">
-                                                    <line id="SvgjsLine1286" x1="0" y1="0" x2="505" y2="0"
-                                                          stroke="#e0e0e0" stroke-dasharray="0"
-                                                          class="apexcharts-gridline"></line>
-                                                    <line id="SvgjsLine1287" x1="0" y1="20" x2="505" y2="20"
-                                                          stroke="#e0e0e0" stroke-dasharray="0"
-                                                          class="apexcharts-gridline"></line>
-                                                    <line id="SvgjsLine1288" x1="0" y1="40" x2="505" y2="40"
-                                                          stroke="#e0e0e0" stroke-dasharray="0"
-                                                          class="apexcharts-gridline"></line>
-                                                    <line id="SvgjsLine1289" x1="0" y1="60" x2="505" y2="60"
-                                                          stroke="#e0e0e0" stroke-dasharray="0"
-                                                          class="apexcharts-gridline"></line>
-                                                    <line id="SvgjsLine1290" x1="0" y1="80" x2="505" y2="80"
-                                                          stroke="#e0e0e0" stroke-dasharray="0"
-                                                          class="apexcharts-gridline"></line>
-                                                    <line id="SvgjsLine1291" x1="0" y1="100" x2="505" y2="100"
-                                                          stroke="#e0e0e0" stroke-dasharray="0"
-                                                          class="apexcharts-gridline"></line>
-                                                    <line id="SvgjsLine1292" x1="0" y1="120" x2="505" y2="120"
-                                                          stroke="#e0e0e0" stroke-dasharray="0"
-                                                          class="apexcharts-gridline"></line>
-                                                    <line id="SvgjsLine1293" x1="0" y1="140" x2="505" y2="140"
-                                                          stroke="#e0e0e0" stroke-dasharray="0"
-                                                          class="apexcharts-gridline"></line>
-                                                    <line id="SvgjsLine1294" x1="0" y1="160" x2="505" y2="160"
-                                                          stroke="#e0e0e0" stroke-dasharray="0"
-                                                          class="apexcharts-gridline"></line>
-                                                    <line id="SvgjsLine1295" x1="0" y1="180" x2="505" y2="180"
-                                                          stroke="#e0e0e0" stroke-dasharray="0"
-                                                          class="apexcharts-gridline"></line>
-                                                    <line id="SvgjsLine1296" x1="0" y1="200" x2="505" y2="200"
-                                                          stroke="#e0e0e0" stroke-dasharray="0"
-                                                          class="apexcharts-gridline"></line>
-                                                </g>
-                                                <g id="SvgjsG1285" class="apexcharts-gridlines-vertical"
-                                                   style="display: none;"></g>
-                                                <line id="SvgjsLine1298" x1="0" y1="200" x2="505" y2="200"
-                                                      stroke="transparent" stroke-dasharray="0"></line>
-                                                <line id="SvgjsLine1297" x1="0" y1="1" x2="0" y2="200"
-                                                      stroke="transparent" stroke-dasharray="0"></line>
-                                            </g>
-                                            <g id="SvgjsG1256" class="apexcharts-area-series apexcharts-plot-series">
-                                                <g id="SvgjsG1257" class="apexcharts-series" seriesName="NetxProfit"
-                                                   data:longestSeries="true" rel="1" data:realIndex="0">
-                                                    <path id="SvgjsPath1260"
-                                                          d="M 0 200L 0 125C 29.458333333333332 125 54.70833333333334 87.5 84.16666666666667 87.5C 113.625 87.5 138.875 120 168.33333333333334 120C 197.79166666666669 120 223.04166666666669 25 252.5 25C 281.9583333333333 25 307.20833333333337 100 336.6666666666667 100C 366.125 100 391.375 100 420.8333333333333 100C 450.29166666666663 100 475.5416666666667 100 505 100C 505 100 505 100 505 200M 505 100z"
-                                                          fill="transparent" fill-opacity="1" stroke-opacity="1"
-                                                          stroke-linecap="butt" stroke-width="0" stroke-dasharray="0"
-                                                          class="apexcharts-area" index="0"
-                                                          clip-path="url(#gridRectMaskzsn71zli)"
-                                                          filter="url(#SvgjsFilter1261)"
-                                                          pathTo="M 0 200L 0 125C 29.458333333333332 125 54.70833333333334 87.5 84.16666666666667 87.5C 113.625 87.5 138.875 120 168.33333333333334 120C 197.79166666666669 120 223.04166666666669 25 252.5 25C 281.9583333333333 25 307.20833333333337 100 336.6666666666667 100C 366.125 100 391.375 100 420.8333333333333 100C 450.29166666666663 100 475.5416666666667 100 505 100C 505 100 505 100 505 200M 505 100z"
-                                                          pathFrom="M -1 200L -1 200L 84.16666666666667 200L 168.33333333333334 200L 252.5 200L 336.6666666666667 200L 420.8333333333333 200L 505 200"></path>
-                                                    <path id="SvgjsPath1270"
-                                                          d="M 0 125C 29.458333333333332 125 54.70833333333334 87.5 84.16666666666667 87.5C 113.625 87.5 138.875 120 168.33333333333334 120C 197.79166666666669 120 223.04166666666669 25 252.5 25C 281.9583333333333 25 307.20833333333337 100 336.6666666666667 100C 366.125 100 391.375 100 420.8333333333333 100C 450.29166666666663 100 475.5416666666667 100 505 100"
-                                                          fill="none" fill-opacity="1" stroke="#d13647"
-                                                          stroke-opacity="1" stroke-linecap="butt" stroke-width="3"
-                                                          stroke-dasharray="0" class="apexcharts-area" index="0"
-                                                          clip-path="url(#gridRectMaskzsn71zli)"
-                                                          filter="url(#SvgjsFilter1271)"
-                                                          pathTo="M 0 125C 29.458333333333332 125 54.70833333333334 87.5 84.16666666666667 87.5C 113.625 87.5 138.875 120 168.33333333333334 120C 197.79166666666669 120 223.04166666666669 25 252.5 25C 281.9583333333333 25 307.20833333333337 100 336.6666666666667 100C 366.125 100 391.375 100 420.8333333333333 100C 450.29166666666663 100 475.5416666666667 100 505 100"
-                                                          pathFrom="M -1 200L -1 200L 84.16666666666667 200L 168.33333333333334 200L 252.5 200L 336.6666666666667 200L 420.8333333333333 200L 505 200"></path>
-                                                    <g id="SvgjsG1258" class="apexcharts-series-markers-wrap"
-                                                       data:realIndex="0">
-                                                        <g class="apexcharts-series-markers">
-                                                            <circle id="SvgjsCircle1304" r="0" cx="0" cy="0"
-                                                                    class="apexcharts-marker wev9hpc6rk no-pointer-events"
-                                                                    stroke="#d13647" fill="#ffe2e5" fill-opacity="1"
-                                                                    stroke-width="3" stroke-opacity="0.9"
-                                                                    default-marker-size="0"></circle>
-                                                        </g>
-                                                    </g>
-                                                </g>
-                                                <g id="SvgjsG1259" class="apexcharts-datalabels" data:realIndex="0"></g>
-                                            </g>
-                                            <line id="SvgjsLine1299" x1="0" y1="0" x2="505" y2="0" stroke="#b6b6b6"
-                                                  stroke-dasharray="0" stroke-width="1"
-                                                  class="apexcharts-ycrosshairs"></line>
-                                            <line id="SvgjsLine1300" x1="0" y1="0" x2="505" y2="0" stroke-dasharray="0"
-                                                  stroke-width="0" class="apexcharts-ycrosshairs-hidden"></line>
-                                            <g id="SvgjsG1301" class="apexcharts-yaxis-annotations"></g>
-                                            <g id="SvgjsG1302" class="apexcharts-xaxis-annotations"></g>
-                                            <g id="SvgjsG1303" class="apexcharts-point-annotations"></g>
-                                        </g>
-                                        <g id="SvgjsG1282" class="apexcharts-yaxis" rel="0"
-                                           transform="translate(-18, 0)"></g>
-                                        <g id="SvgjsG1252" class="apexcharts-annotations"></g>
-                                    </svg>
-                                    <div class="apexcharts-legend" style="max-height: 100px;"></div>
-                                    <div class="apexcharts-tooltip apexcharts-theme-light">
-                                        <div class="apexcharts-tooltip-title"
-                                             style="font-family: Poppins; font-size: 12px;"></div>
-                                        <div class="apexcharts-tooltip-series-group" style="order: 1;"><span
-                                                class="apexcharts-tooltip-marker"
-                                                style="background-color: transparent;"></span>
-                                            <div class="apexcharts-tooltip-text"
-                                                 style="font-family: Poppins; font-size: 12px;">
-                                                <div class="apexcharts-tooltip-y-group"><span
-                                                        class="apexcharts-tooltip-text-label"></span><span
-                                                        class="apexcharts-tooltip-text-value"></span></div>
-                                                <div class="apexcharts-tooltip-z-group"><span
-                                                        class="apexcharts-tooltip-text-z-label"></span><span
-                                                        class="apexcharts-tooltip-text-z-value"></span></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="apexcharts-yaxistooltip apexcharts-yaxistooltip-0 apexcharts-yaxistooltip-left apexcharts-theme-light">
-                                        <div class="apexcharts-yaxistooltip-text"></div>
-                                    </div>
-                                </div>
+                            <div id="kt_mixed_widget_1_chartss" class="card-rounded-bottom bg-danger" style="height: 200px">
+
                             </div>
                             <!--end::Chart-->
                             <!--begin::Stats-->
@@ -239,15 +49,15 @@
                                         <h6 class="text-primary font-weight-bold font-size-h6">Today's Users</h6>
                                     </div>
                                     <div class="col bg-light-danger px-6 py-8 rounded-xl mr-7 mb-7">
-                                        <h3>{{$activeUsers}}</h3><br>
+                                        <h3>{{number_format($totalRewards,2)}}</h3><br>
                                         <a href="#" class="text-danger font-weight-bold font-size-h6 mt-2">
-                                            Active Users
+                                            Total Rewards
                                         </a>
                                     </div>
-                                    <div class="col bg-light-success px-6 py-8 rounded-xl mb-7">
-                                        <h3>{{$inActiveUsers}}</h3><br>
+                                    <div class="col bg-light-success px-6 py-8 rounded-xl mr-7 mb-7">
+                                        <h3>{{number_format($todayRewards,2)}}</h3><br>
                                         <a href="#" class="text-success font-weight-bold font-size-h6 mt-2">
-                                            In Active Users
+                                            Today's Rewards
                                         </a>
                                     </div>
                                 </div>
@@ -335,4 +145,78 @@
     </div>
     <!--end::Entry-->
 
+
 @endsection
+@push('footerscript')
+    <script src="{{asset('admin/js/pages/widgetsd1cf.js?v=7.1.6')}}"></script>
+    <script>
+        var KTAppSettings = {
+            breakpoints: { sm: 576, md: 768, lg: 992, xl: 1200, xxl: 1400 },
+            colors: {
+                theme: {
+                    base: { white: "#ffffff", primary: "#3699FF", secondary: "#E5EAEE", success: "#1BC5BD", info: "#8950FC", warning: "#FFA800", danger: "#F64E60", light: "#E4E6EF", dark: "#181C32" },
+                    light: { white: "#ffffff", primary: "#E1F0FF", secondary: "#EBEDF3", success: "#C9F7F5", info: "#EEE5FF", warning: "#FFF4DE", danger: "#FFE2E5", light: "#F3F6F9", dark: "#D6D6E0" },
+                    inverse: { white: "#ffffff", primary: "#ffffff", secondary: "#3F4254", success: "#ffffff", info: "#ffffff", warning: "#ffffff", danger: "#ffffff", light: "#464E5F", dark: "#ffffff" },
+                },
+                gray: { "gray-100": "#F3F6F9", "gray-200": "#EBEDF3", "gray-300": "#E4E6EF", "gray-400": "#D1D3E0", "gray-500": "#B5B5C3", "gray-600": "#7E8299", "gray-700": "#5E6278", "gray-800": "#3F4254", "gray-900": "#181C32" },
+            },
+            "font-family": "Poppins",
+        };
+
+        $(document).ready(function(){
+            var t = document.getElementById("kt_mixed_widget_1_chartss"),
+                e = parseInt(KTUtil.css(t, "height"));
+            if (t) {
+                var o = "#D13647",
+                    s = {
+                        series: [{ name: "Users", data: [
+                                @for ($m=1; $m<=12; $m++)
+                                    {{CommonClass::getUserByMonth($m)}},
+                                @endfor
+                            ] }],
+                        chart: {
+                            type: "area",
+                            height: e,
+                            toolbar: { show: !1 },
+                            zoom: { enabled: !1 },
+                            sparkline: { enabled: !0 },
+                            dropShadow: { enabled: !0, enabledOnSeries: void 0, top: 5, left: 0, blur: 3, color: o, opacity: 0.5 },
+                        },
+                        plotOptions: {},
+                        legend: { show: !1 },
+                        dataLabels: { enabled: !1 },
+                        fill: { type: "solid", opacity: 0 },
+                        stroke: { curve: "smooth", show: !0, width: 3, colors: [o] },
+                        xaxis: {
+                            categories: [
+                                @for ($m=1; $m<=12; $m++)
+                                    "{{$month = date('M', mktime(0,0,0,$m))}}",
+                                @endfor
+                            ],
+                            axisBorder: { show: !1 },
+                            axisTicks: { show: !1 },
+                            labels: { show: !1, style: { colors: KTApp.getSettings().colors.gray["gray-500"], fontSize: "12px", fontFamily: KTApp.getSettings()["font-family"] } },
+                            crosshairs: { show: !1, position: "front", stroke: { color: KTApp.getSettings().colors.gray["gray-300"], width: 1, dashArray: 3 } },
+                        },
+                        yaxis: { min: 0, max: 80, labels: { show: !1, style: { colors: KTApp.getSettings().colors.gray["gray-500"], fontSize: "12px", fontFamily: KTApp.getSettings()["font-family"] } } },
+                        states: { normal: { filter: { type: "none", value: 0 } }, hover: { filter: { type: "none", value: 0 } }, active: { allowMultipleDataPointsSelection: !1, filter: { type: "none", value: 0 } } },
+                        tooltip: {
+                            style: { fontSize: "12px", fontFamily: KTApp.getSettings()["font-family"] },
+                            y: {
+                                formatter: function (t) {
+                                    return "" + t + " ";
+                                },
+                            },
+                            marker: { show: !1 },
+                        },
+                        colors: ["transparent"],
+                        markers: { colors: [KTApp.getSettings().colors.theme.light.danger], strokeColor: [o], strokeWidth: 3 },
+                    };
+                new ApexCharts(t, s).render();
+            }
+        });
+        jQuery(document).ready(function () {
+            KTWidgets.init();
+        });
+    </script>
+    @endpush
