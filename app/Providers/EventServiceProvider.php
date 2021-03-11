@@ -4,7 +4,13 @@ namespace App\Providers;
 
 use App\Events\LevelUpdated;
 use App\Events\LevelUpgraded;
+
 use App\Listeners\OnLevelUpgraded;
+
+use App\Events\RewardAdded;
+use App\Listeners\OnLevelUpgraded;
+use App\Listeners\OnRewardAdded;
+
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -24,6 +30,11 @@ class EventServiceProvider extends ServiceProvider
 
         LevelUpgraded::class =>[
             OnLevelUpgraded::class
+
+        ],
+        RewardAdded::class =>[
+            OnRewardAdded::class
+
         ]
     ];
 

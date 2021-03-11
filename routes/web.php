@@ -6,10 +6,15 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\HealthConditionController;
+
 use App\Http\Controllers\Admin\RewardSettingController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\LevelRequirementController;
 use App\Http\Controllers\Admin\RewardController;
+
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\LevelRequirementController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +43,13 @@ Route::get('/install', function(){
     \Illuminate\Support\Facades\Artisan::call('cache:clear') ;
     return \App\Helpers\JsonResponse::success("App Installed");
 
+});
+Route::get('/seed', function(){
+    \Illuminate\Support\Facades\Artisan::call('cache:clear') ;
+    \Illuminate\Support\Facades\Artisan::call('db:seed --class=RewardSettingsSeeder') ;
+    \Illuminate\Support\Facades\Artisan::call('db:seed --class=RoleSeeder') ;
+    \Illuminate\Support\Facades\Artisan::call('cache:clear') ;
+    return \App\Helpers\JsonResponse::success("Seeding Complete");
 });
 Route::get('/migrate', function(){
     \Illuminate\Support\Facades\Artisan::call('cache:clear') ;
@@ -70,6 +82,7 @@ Route::group(['middleware' => ['role:admin','auth'],'prefix'=>'admin'], function
     // Health Condition Master
     Route::resource('/health-conditions', HealthConditionController::class);
 
+
     // Reward Setting Master
     Route::resource('/reward-setting', RewardSettingController::class);
 
@@ -85,7 +98,9 @@ Route::group(['middleware' => ['role:admin','auth'],'prefix'=>'admin'], function
     Route::get('/users/index',[UserController::class,'index']);
     Route::get('/users/view/{id}',[UserController::class,'view']);
 
+
     // Rewards
     Route::get('/rewards/getData', [RewardController::class,'getData']);
     Route::get('/rewards', [RewardController::class,'index']);
+
 });
