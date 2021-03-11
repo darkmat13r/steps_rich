@@ -197,6 +197,7 @@ class UserService
         $user->level += 1;
         $user->level_last_updated_at = Carbon::now()->toDateTimeString();
         $user->save();
+
         event(new LevelUpgraded($user));
     }
 
