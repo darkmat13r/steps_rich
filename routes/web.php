@@ -6,8 +6,15 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\HealthConditionController;
+
+use App\Http\Controllers\Admin\RewardSettingController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\LevelRequirementController;
+use App\Http\Controllers\Admin\RewardController;
+
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\LevelRequirementController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -75,6 +82,10 @@ Route::group(['middleware' => ['role:admin','auth'],'prefix'=>'admin'], function
     // Health Condition Master
     Route::resource('/health-conditions', HealthConditionController::class);
 
+
+    // Reward Setting Master
+    Route::resource('/reward-setting', RewardSettingController::class);
+
     // Admin Master
     Route::resource('/admins', AdminController::class);
 
@@ -86,4 +97,10 @@ Route::group(['middleware' => ['role:admin','auth'],'prefix'=>'admin'], function
     Route::get('/users/getData',[UserController::class,'getData']);
     Route::get('/users/index',[UserController::class,'index']);
     Route::get('/users/view/{id}',[UserController::class,'view']);
+
+
+    // Rewards
+    Route::get('/rewards/getData', [RewardController::class,'getData']);
+    Route::get('/rewards', [RewardController::class,'index']);
+
 });

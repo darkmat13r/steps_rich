@@ -66,4 +66,8 @@ class User extends Authenticatable
     function healthConditions(){
         return $this->hasMany(UserHealthCondition::class);
     }
+
+    function rewards(){
+        return $this->hasMany(RewardHistory::class,'user_id');
+    }
 }

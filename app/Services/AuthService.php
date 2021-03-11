@@ -40,10 +40,10 @@ class AuthService
         $childCount = UserTree::where('parent_user_id', $fromUserId)->get();
         $maxUserAllowed = \setting(Setting::MAX_ALLOW_CHILD);
         $allowExtendedTree = \setting(Setting::ALLOW_EXTENDED_TREE);
-        if($childCount >= $maxUserAllowed && !$allowExtendedTree){
+        if($maxUserAllowed != 0 && $childCount >= $maxUserAllowed){
             return;
         }
-        $emptyNodeUserId = $this->findUserWithEmptyNode($fromUserId);
+        $emptyNodeUserId = $fromUserId;
         if($emptyNodeUserId){
             (new UserTree())->forceFill([
                 'parent_user_id' => $emptyNodeUserId['user_id'],
