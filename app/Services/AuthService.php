@@ -10,14 +10,17 @@ use App\Models\Setting;
 use App\Models\User;
 use App\Models\UserTree;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class AuthService
 {
 
     function register($data)
     {
+        Log::error("DAta : " . json_encode($data));
         $referralCode = isset($data['referral_code']) ? $data['referral_code'] : null;
         $referredBy = User::findByReferralCode($referralCode)->first();
+
         if($referralCode && $referredBy){
             new GeneralException('auth.errors.invalid_referral_code');
         }
@@ -29,6 +32,7 @@ class AuthService
         $user->save();
         $user->access_token = $user->createToken($data['email'])->accessToken;
         if($referralCode){
+            Log::error("Add To Tree : ");
             $this->addToUserTree($user->id, $referredBy->id);
         }
         return $user;
@@ -38,15 +42,15 @@ class AuthService
     function addToUserTree($userId, $fromUserId)
     {
         $childCount = UserTree::where('parent_user_id', $fromUserId)->get();
-        $maxUserAllowed = \setting(Setting::MAX_ALLOW_CHILD);
+      /*  $maxUserAllowed = \setting(Setting::MAX_ALLOW_CHILD);
         $allowExtendedTree = \setting(Setting::ALLOW_EXTENDED_TREE);
         if($maxUserAllowed != 0 && $childCount >= $maxUserAllowed){
             return;
-        }
+        }*/
         $emptyNodeUserId = $fromUserId;
         if($emptyNodeUserId){
             (new UserTree())->forceFill([
-                'parent_user_id' => $emptyNodeUserId['user_id'],
+                'parent_user_id' => $emptyNodeUserId,
                 'child_user_id' => $userId,
                 'referred_by' => $fromUserId
             ])->save();
