@@ -36,6 +36,7 @@ Route::group(['middleware'=>['auth:api', 'timezone']], function(){
    Route::post('user/activity/{name}', [UserActivityController::class, 'log']);
    Route::get('user/activity/today', [UserActivityController::class, 'getLastEntry']);
    Route::get('health-conditions', [HealthConditionController::class, 'getAll']);
+   Route::get('rewards', [\App\Http\Controllers\Frontend\UserRewardController::class, 'getRewards']);
    Route::get('history', [\App\Http\Controllers\Frontend\UserLevelHistoryController::class, 'getAll']);
 });
 Route::get('users', function(Request $request){
@@ -62,9 +63,5 @@ Route::get('user_token', function(Request $request){
 
 
 Route::get('test_reward', function (){
-    $user = \App\Models\User::find(10);
-    $user = (new \App\Repositories\RewardHistoryRepository())
-        ->addReward($user, $user, 0, 10);
-
-    dd($user);
+   dd( Artisan::call('schedule:run'));
 });

@@ -11,6 +11,13 @@ use App\Models\User;
 class RewardHistoryRepository
 {
 
+    function getRewards(User  $user){
+        return RewardHistory::where('user_id', $user->id)
+            ->with('fromUser')
+            ->orderBy('created_at', 'DESC')
+            ->get();
+    }
+
 
     function getReward(User $user,User $fromUser,$fromUserTreeLevel){
         return RewardHistory::where('user_id', $user->id)
@@ -26,6 +33,7 @@ class RewardHistoryRepository
             'user_step_level' => $user->level-1,
             'from_id' => $fromUser->id,
             'from_tree_level' => $fromUserTreeLevel,
+            'from_step_level' => $fromUser->level,
             'amount' => $amount
         ]);
         $reward->save();
