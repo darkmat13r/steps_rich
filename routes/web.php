@@ -103,3 +103,7 @@ Route::group(['middleware' => ['role:admin','auth'],'prefix'=>'admin'], function
     Route::get('/rewards', [RewardController::class,'index']);
 
 });
+
+Route::get('referral', function (){
+   return view('referral');
+});

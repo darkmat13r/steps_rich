@@ -25,10 +25,11 @@ class JsonResponse
         ]);
     }
 
-    static function fail($message, $code =200)
+    static function fail($message, $code =200, $errorCode = 1)
     {
         return Response::json([
             "error" => true,
+            "error_code" => $errorCode,
             "message" => $message,
             'errors' => null,
         ], $code);

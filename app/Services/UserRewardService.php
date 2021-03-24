@@ -24,13 +24,13 @@ class UserRewardService
     function addRewards(User $user)
     {
 
+        Log::info("Add reward Started");
         //Own income
         $currentLevel = 0;
         $userLevel = $user->level-1;
         if( $userLevel == 1){
             $rewardSettings = RewardSetting::where('step_level',$userLevel )
                 ->where('tree_level', $currentLevel)->first();
-
             if ($rewardSettings) {
                 //Check if he has already earned that reward
                 $rewardHistory = $this->rewardHistoryRepo->getReward($user,  $user, $currentLevel);

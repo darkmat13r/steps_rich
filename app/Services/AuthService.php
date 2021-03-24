@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Exceptions\GeneralException;
+use App\Helpers\ReferralCodeHelper;
 use App\Helpers\StringHelper;
 use App\Models\Setting;
 use App\Models\User;
@@ -17,6 +18,7 @@ class AuthService
 
     function register($data)
     {
+
         Log::error("DAta : " . json_encode($data));
         $referralCode = isset($data['referral_code']) ? $data['referral_code'] : null;
         $referredBy = User::findByReferralCode($referralCode)->first();
@@ -25,10 +27,12 @@ class AuthService
             new GeneralException('auth.errors.invalid_referral_code');
         }
         $data['password'] = bcrypt($data['password']);
-        $data['referral_code'] = StringHelper::randomString(6);
+      //  $data['referral_code'] = ReferralCodeHelper::generate($username);
         $data['email'] = $data['username'];
         unset($data['username']);
         $user = (new User())->forceFill($data);
+        $user->save();
+        $user->referral_code = ReferralCodeHelper::generate($user);
         $user->save();
         $user->access_token = $user->createToken($data['email'])->accessToken;
         if($referralCode){

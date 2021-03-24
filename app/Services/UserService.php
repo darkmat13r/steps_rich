@@ -32,18 +32,31 @@ class UserService
         $this->userRepo = new UserRepository();
     }
 
+
+    function isActive(User $user){
+        return $user->bankAccount && $user->name && $user->dob && $user->gender && $user->weight && $user->height &&  $user->approved_at;
+    }
+
+
+
     function getProfile($userId)
     {
         $user = User::find($userId);
-        $user->healthConditions;
         if (!$user) {
-            throw new GeneralException('user.errors.user_not_found', 404);
+            throw new GeneralException(__('user.errors.user_not_found'), 404);
         }
+        $user->healthConditions;
+        $user->bankAccount;
+        $user->receipt_sent = $user->bankTransfertReceipt != null;
+        $user->is_active = $this->isActive($user);
         $user->requirement = $this->levelRequirementRepo->getRequirement($user);
-
-        if (!$user->requirement) {
-            throw new GeneralException('user.errors.not_eligible');
+       /* if (!$user->requirement) {
+            throw new GeneralException(__('user.errors.not_eligible'), 403);
+        }*/
+        if(!$user->requirement){
+            return $user;
         }
+
         $daysToCompleteLevel = $this->getDayToCompleteLevel($user->requirement);
         $currentDate = Carbon::now()->toDateString();
         $dailySteps = $this->userActivityRepo->getSumByDate($userId, $currentDate);

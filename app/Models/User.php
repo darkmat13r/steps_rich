@@ -70,4 +70,11 @@ class User extends Authenticatable
     function rewards(){
         return $this->hasMany(RewardHistory::class,'user_id');
     }
+
+    function bankAccount(){
+        return $this->hasOne(BankAccount::class);
+    }
+    function bankTransfertReceipt(){
+        return $this->hasOne(UserBankTransferReceipt::class);
+    }
 }

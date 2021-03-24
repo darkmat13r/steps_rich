@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Frontend\Auth;
 
 use App\Helpers\JsonResponse;
+use App\Helpers\ReferralCodeHelper;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Services\AuthService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;

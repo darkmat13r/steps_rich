@@ -48,6 +48,9 @@ class UpdateLevelJob implements ShouldQueue
             }
             try{
                 $profile = $this->userService->getProfile($user->id);
+                if(!$profile->requirement){
+                    continue;
+                }
                 Log::info("==================Start PROFILE==================");
                 Log::info(json_encode($profile));
                 Log::info("==================End PROFILE==================");

@@ -31,6 +31,8 @@ Route::post('forgot-password', [\App\Http\Controllers\Frontend\PasswordResetLink
 Route::group(['middleware'=>['auth:api', 'timezone']], function(){
 
    Route::put('user', [UserProfileController::class, 'update']);
+   Route::post('user/bank/account', [\App\Http\Controllers\Frontend\BankAccountController::class, 'create']);
+   Route::post('user/transfer/receipt', [\App\Http\Controllers\Frontend\BanTransferReceiptController::class, 'upload']);
    Route::get('user', [UserProfileController::class, 'getProfile']);
    Route::put('user/health', [UserProfileController::class, 'updateHealthData']);
    Route::post('user/activity/{name}', [UserActivityController::class, 'log']);
