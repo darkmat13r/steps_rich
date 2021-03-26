@@ -23,8 +23,8 @@ class AuthService
         $referralCode = isset($data['referral_code']) ? $data['referral_code'] : null;
         $referredBy = User::findByReferralCode($referralCode)->first();
 
-        if($referralCode && $referredBy){
-            new GeneralException('auth.errors.invalid_referral_code');
+        if(!$referredBy){
+            throw new GeneralException(__('auth.errors.invalid_referral_code'));
         }
         $data['password'] = bcrypt($data['password']);
       //  $data['referral_code'] = ReferralCodeHelper::generate($username);
@@ -35,7 +35,7 @@ class AuthService
         $user->referral_code = ReferralCodeHelper::generate($user);
         $user->save();
         $user->access_token = $user->createToken($data['email'])->accessToken;
-        if($referralCode){
+        if($referralCode && $referredBy){
             Log::error("Add To Tree : ");
             $this->addToUserTree($user->id, $referredBy->id);
         }
