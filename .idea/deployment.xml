@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="avinash@armadadigital.com.my" remoteFilesAllowedToDisappearOnAutoupload="false">
+  <component name="PublishConfigData" autoUpload="Always" serverName="avinash@armadadigital.com.my">
     <serverData>
       <paths name="avinash@armadadigital.com.my">
         <serverdata>
           <mappings>
-            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
+            <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
-          <excludedPaths>
-            <excludedPath path="/vendor" />
-            <excludedPath path="/node_modules" />
-            <excludedPath path="/bootstrap" />
-            <excludedPath path="/storage" />
-            <excludedPath path="/resources" />
-            <excludedPath path="/public" />
-            <excludedPath path="/.env" />
-          </excludedPaths>
         </serverdata>
       </paths>
     </serverData>

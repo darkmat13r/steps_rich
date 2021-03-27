@@ -94,8 +94,21 @@ Route::group(['middleware' => ['role:admin','auth'],'prefix'=>'admin'], function
 
     // Users
     Route::get('/users/getData',[UserController::class,'getData']);
+    Route::get('/users/getPendingData',[UserController::class,'getPendingData']);
     Route::get('/users/index',[UserController::class,'index']);
+    Route::get('/users/pending',[UserController::class,'indexPending']);
+    Route::get('/users/approve/{id}',[UserController::class,'approve']);
     Route::get('/users/view/{id}',[UserController::class,'view']);
+
+    // Payout
+    Route::get('payout-report-excel', [UserController::class, 'payoutExcel']);
+    Route::get('payout/getData',[UserController::class,'getPayoutData']);
+    Route::post('payout/done',[UserController::class,'payoutDone']);
+    Route::get('payout',[UserController::class,'payout']);
+
+    // Transaction
+    Route::get('transaction/getData',[UserController::class,'getTransactionData']);
+    Route::get('transaction',[UserController::class,'transaction']);
 
 
     // Rewards

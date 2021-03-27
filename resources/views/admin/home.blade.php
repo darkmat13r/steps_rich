@@ -41,12 +41,12 @@
                                 <!--begin::Row-->
                                 <div class="row m-0">
                                     <div class="col bg-light-warning px-6 py-8 rounded-xl mr-7 mb-7">
-                                        <h3>{{count($totalUsers)}}</h3><br>
-                                        <h6 class="text-warning font-weight-bold font-size-h6">Total Users</h6>
+                                        <h3>{{count($approvedUsers)}}</h3><br>
+                                        <h6 class="text-warning font-weight-bold font-size-h6">Approved Users</h6>
                                     </div>
                                     <div class="col bg-light-primary px-6 py-8 rounded-xl mr-7 mb-7">
-                                        <h3>{{count($todayUsers)}}</h3><br>
-                                        <h6 class="text-primary font-weight-bold font-size-h6">Today's Users</h6>
+                                        <h3>{{count($pendingUsers)}}</h3><br>
+                                        <h6 class="text-primary font-weight-bold font-size-h6">Pending Users</h6>
                                     </div>
                                     <div class="col bg-light-danger px-6 py-8 rounded-xl mr-7 mb-7">
                                         <h3>{{number_format($totalRewards,2)}}</h3><br>
@@ -55,9 +55,9 @@
                                         </a>
                                     </div>
                                     <div class="col bg-light-success px-6 py-8 rounded-xl mr-7 mb-7">
-                                        <h3>{{number_format($todayRewards,2)}}</h3><br>
+                                        <h3>{{number_format($totalTransaction->sum('amount'),2)}}</h3><br>
                                         <a href="#" class="text-success font-weight-bold font-size-h6 mt-2">
-                                            Today's Rewards
+                                            Total Transactions
                                         </a>
                                     </div>
                                 </div>

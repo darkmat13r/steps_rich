@@ -20,6 +20,9 @@
     <link href="{{asset('admin/css/themes/layout/brand/darkd1cf.css?v=7.1.6')}}" rel="stylesheet" type="text/css"/>
     <link href="{{asset('admin/css/themes/layout/aside/darkd1cf.css?v=7.1.6')}}" rel="stylesheet" type="text/css"/>
     @stack('headerscript')
+    <style>
+        .table{display: inline-table;width: 100%}
+    </style>
 </head>
 <body id="kt_body"
       class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
@@ -114,7 +117,7 @@
                     <!--begin::Copyright-->
                     <div class="text-dark order-2 order-md-1">
                         <span class="text-muted font-weight-bold mr-2">2021©</span>
-                        <a href="http://keenthemes.com/metronic" target="_blank"
+                        <a href="#" target="_blank"
                            class="text-dark-75 text-hover-primary">Developer</a>
                     </div>
                     <!--end::Copyright-->
