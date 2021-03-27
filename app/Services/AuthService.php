@@ -16,6 +16,11 @@ use Illuminate\Support\Facades\Log;
 class AuthService
 {
 
+
+    public function __construct()
+    {
+    }
+
     function register($data)
     {
 
@@ -100,7 +105,6 @@ class AuthService
         if (!Hash::check($password, $user->password)) {
             throw new GeneralException(__('auth.errors.invalid_credentials'));
         }
-        $user->access_token = $user->createToken($username)->accessToken;
         return $user;
     }
 
