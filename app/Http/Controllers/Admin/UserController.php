@@ -37,6 +37,12 @@ class UserController extends Controller
         $data = User::find($id);
         $profileData = $this->userservice->getProfile($id);
         $bankDetails = $data->bankAccount;
+        // dd($profileData);
+        // if(!$profileData){
+        //     session()->flash('danger_msg','Profile detail not fillup');
+        //     return redirect()->back();
+        // }
+       
         $mUsers = $this->buildTree($data->id, $data->id, 1000);
         $referrer = UserTree::where('child_user_id', $data->id)->value('referred_by');
         $referredBy = '--';

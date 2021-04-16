@@ -13,6 +13,8 @@
             <excludedPath path="/bootstrap" />
             <excludedPath path="/storage" />
             <excludedPath path="/.env" />
+            <excludedPath path="/vendor-old" />
+            <excludedPath path="/stepCount" />
           </excludedPaths>
         </serverdata>
       </paths>
