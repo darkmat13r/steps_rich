@@ -66,10 +66,27 @@
                                             <i class="fas fa-phone-alt text-primary mr-2 font-size-lg"></i>{{$data->country_code.' '.$data->phone}}
                                         </p>
                                         <p class="text-dark-50 text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
+                                            <i class="fa fa-building text-primary mr-2"></i>Bank Name : {{$bankDetails->bank_name}}
+                                        </p>
+                                        <p class="text-dark-50 text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
+                                            <i class="fas fa-user text-primary mr-2 font-size-lg"></i>Acc. Name : {{$bankDetails->account_name}}
+                                        </p>
+
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-column flex-grow-1 pr-8">
+                                    <div class="d-flex flex-wrap mb-4">
+                                        <p class="text-dark-50 text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
                                             <i class="fas fa-globe-americas text-primary mr-2 font-size-lg"></i>{{$data->country}}
                                         </p>
-                                        <p class="text-dark-50 text-hover-primary font-weight-bold">
+                                        <p class="text-dark-50 text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
                                             <i class="fas fa-user text-primary mr-2 font-size-lg"></i>Referred By : {{$referredBy}}
+                                        </p>
+                                        <p class="text-dark-50 text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
+                                            <i class="fas fa-table text-primary mr-2 font-size-lg"></i>Acc. No : {{$bankDetails->getRawOriginal('account_number')}}
+                                        </p>
+                                        <p class="text-dark-50 text-hover-primary font-weight-bold">
+                                            <i class="fas fa-question text-primary mr-2 font-size-lg"></i>Acc. Type : {{$bankDetails->account_type}}
                                         </p>
                                     </div>
                                 </div>
