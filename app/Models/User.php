@@ -33,6 +33,8 @@ class User extends Authenticatable
         'height',
     ];
 
+    protected $appends = ['is_profile_complete'];
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -76,5 +78,9 @@ class User extends Authenticatable
     }
     function bankTransfertReceipt(){
         return $this->hasOne(UserBankTransferReceipt::class);
+    }
+
+    function getIsProfileCompleteAttribute(){
+        return $this->name && $this->gender && $this->weight && $this->height && $this->activity_level;
     }
 }

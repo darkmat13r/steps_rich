@@ -3,7 +3,7 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="23437708-4b25-4ce7-980d-ea221076a78f" name="avinash@armadadigital.com.my" url="http://armadadigital.com.my">
-        <fileTransfer rootFolder="/walklah" host="armadadigital.com.my" port="21">
+        <fileTransfer rootFolder="/ugoku" host="armadadigital.com.my" port="21">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>

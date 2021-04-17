@@ -63,6 +63,9 @@ Route::get('user_token', function(Request $request){
    return \App\Helpers\JsonResponse::success($user);
 });
 
+Route::post("paypal/order/{userId}", [\App\Http\Controllers\Frontend\PaymentController::class , 'createOrder']);
+Route::post('paypal/verify/{orderId}',[\App\Http\Controllers\Frontend\PaymentController::class, 'verify']);
+Route::post('paypal/callback',[\App\Http\Controllers\Frontend\PaymentController::class, 'callback']);
 
 Route::get('test_reward', function (){
    dd( Artisan::call('schedule:run'));

@@ -37,7 +37,9 @@ class UserService
         return $user->bankAccount && $user->name && $user->dob && $user->gender && $user->weight && $user->height &&  $user->approved_at;
     }
 
-
+    function isApproved(User $user){
+        return  $user->approved_at;
+    }
 
     function getProfile($userId)
     {
@@ -49,6 +51,7 @@ class UserService
         $user->bankAccount;
         $user->receipt_sent = $user->bankTransfertReceipt != null;
         $user->is_active = $this->isActive($user);
+        $user->is_approved = $this->isApproved($user);
         $user->requirement = $this->levelRequirementRepo->getRequirement($user);
        /* if (!$user->requirement) {
             throw new GeneralException(__('user.errors.not_eligible'), 403);
@@ -228,6 +231,11 @@ class UserService
     {
         $user->level_last_updated_at = Carbon::now()->toDateTimeString();
         $user->save();
+    }
+
+    public function activate($user_id)
+    {
+        return $this->userRepo->activate($user_id);
     }
 
 }

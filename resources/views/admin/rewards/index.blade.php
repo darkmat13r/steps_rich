@@ -43,18 +43,16 @@
                 <div class="card-body">
                     <!--begin: Datatable-->
                     <div class="row">
-                        <div class="col-sm-12 col-12">
+                        <div class="col-sm-12 col-12 table-responsive">
                             <table class="table table-responsive datatables" id="datatables">
                                 <thead>
                                 <tr>
                                     <th>#</th>
                                     <th>Date</th>
                                     <th>User</th>
-                                    <th>Level</th>
                                     <th>From</th>
-                                    <th>From Level</th>
                                     <th>From Tree Level</th>
-                                    <th>From Step Level</th>
+                                    <th>User Step Level</th>
                                     <th>Amount</th>
                                 </tr>
                                 </thead>
@@ -90,12 +88,10 @@
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false},
                     {data: 'reward_date', name: 'reward_date'},
-                    {data: 'user_name', name: 'user_name'},
-                    {data: 'user_level', name: 'user_level'},
-                    {data: 'from_name', name: 'from_name'},
-                    {data: 'from_level', name: 'from_level'},
+                    {data: 'user_name', name: 'b.name'},
+                    {data: 'from_name', name: 'a.name'},
                     {data: 'from_tree_level', name: 'from_tree_level'},
-                    {data: 'from_step_level', name: 'from_step_level'},
+                    {data: 'user_step_level', name: 'user_step_level'},
                     {data: 'amount', name: 'amount'},
                 ]
             });

@@ -8,13 +8,17 @@
             <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
           </mappings>
           <excludedPaths>
-            <excludedPath path="/vendor" />
             <excludedPath path="/node_modules" />
             <excludedPath path="/bootstrap" />
             <excludedPath path="/storage" />
             <excludedPath path="/.env" />
             <excludedPath path="/vendor-old" />
             <excludedPath path="/stepCount" />
+            <excludedPath path="/vendor" />
+            <excludedPath path="/tests" />
+            <excludedPath path="/.vagrant" />
+            <excludedPath path="/.well-known" />
+            <excludedPath path="/vendor.zip" />
           </excludedPaths>
         </serverdata>
       </paths>

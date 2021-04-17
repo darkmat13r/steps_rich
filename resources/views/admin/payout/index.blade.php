@@ -42,7 +42,7 @@
                 <div class="card-body">
                     <!--begin: Datatable-->
                     <div class="row">
-                        <div class="col-sm-12 col-12">
+                        <div class="col-sm-12 col-12 table-responsive">
                             <table class="table table-responsive datatables" id="datatables">
                                 <thead>
                                 <tr>

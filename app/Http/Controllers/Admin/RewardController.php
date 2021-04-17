@@ -13,19 +13,17 @@ class RewardController extends Controller
         return view('admin.rewards.index');
     }
     public function getData(){
-        $query = RewardHistory::get();
+        $query = RewardHistory::join('users as a','a.id','reward_histories.from_id')
+        ->leftjoin('users as b','b.id','reward_histories.user_id')
+        ->select('reward_histories.*','a.name as from_name','b.name as user_name');
         return DataTables::of($query)
-            ->addIndexColumn()
-            ->addColumn('user_name',function ($datatables){
-                return $datatables->user->name;
-            })
+             ->addIndexColumn()
+            ->addColumn("DT_RowIndex", '')
+            
             ->addColumn('reward_date',function ($datatables){
                 return date('d-m-Y',strtotime($datatables->created_at));
             })
-            ->addColumn('from_name',function ($datatables){
-                return $datatables->fromUser->name;
-            })
-            ->addColumn('DT_RowIndex','')
+          
             ->make(true);
     }
 }
