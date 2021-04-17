@@ -27,7 +27,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
 <body>
+
 <div class="font-sans container-fluid">
+    <br>
     <div class="row justify-content-center mt-7">
         <div class="col-md-6  mt-8">
             <div class="card card-border">
@@ -35,14 +37,14 @@
                     <div id="action">
                         <h6 class="text-primary text-center">Hello, {{$user->name}}</h6>
                         @if(!$user->bankAccount)
-                            <div>
-                                You haven't added Bank Account yet.
+                            <div class="text-center">
+                                You haven't provided your PayPal Account yet.
                             </div>
                         @elseif(!$user->is_approved && $user->is_profile_complete)
                             <h6 class="text-center text-muted mb-8">Activate Account</h6>
                             <p class="text-center text-muted mb-8">To activate your account you will need to pay the
                                 amount.</p>
-                            <h4 class="text-center mb-8">MYR 12</h4>
+                            <h4 class="text-center mb-8">USD 30</h4>
                             <br>
                             <div id="paypal-button-container" class="mt-8 text-center"></div>
 
