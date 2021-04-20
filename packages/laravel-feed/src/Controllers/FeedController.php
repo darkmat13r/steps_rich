@@ -12,9 +12,20 @@ use Illuminate\Support\Facades\Validator;
 use LaravelFeed\Helpers\JsonResponse;
 use LaravelFeed\Models\Feed;
 use LaravelFeed\Models\FeedImage;
+use LaravelFeed\Repositories\FeedRepository;
 
 class FeedController extends \App\Http\Controllers\Controller
 {
+
+    private  $feedRepository;
+
+    /**
+     * FeedController constructor.
+     */
+    public function __construct()
+    {
+        $this->feedRepository = new FeedRepository();
+    }
 
 
     function getAll(Request $request)
@@ -39,16 +50,7 @@ class FeedController extends \App\Http\Controllers\Controller
 
     function get($id)
     {
-        $feed = Feed::find($id);
-        $feed->withCount('comments');
-        $feed->withCount('likes');
-        $feed->with([
-            'user' => function ($query) {
-                $query->select('id', 'name');
-            }
-        ]);
-        $feed->images;
-        return JsonResponse::success($feed);
+        return JsonResponse::success($this->feedRepository->findById($id));
     }
 
     function create(Request $request)

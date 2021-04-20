@@ -14,7 +14,6 @@
             <excludedPath path="/.env" />
             <excludedPath path="/vendor-old" />
             <excludedPath path="/stepCount" />
-            <excludedPath path="/vendor" />
             <excludedPath path="/tests" />
             <excludedPath path="/.vagrant" />
             <excludedPath path="/.well-known" />
