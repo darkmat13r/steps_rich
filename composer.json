@@ -18,7 +18,17 @@
         "laravelcollective/html": "^6.2",
         "spatie/laravel-permission": "^4.0",
         "srmklive/paypal": "~3.0",
-        "yajra/laravel-datatables": "^1.5"
+        "yajra/laravel-datatables": "^1.5",
+        "darkmat13r/laravel-feed": "@dev"
+    },
+    "repositories": {
+        "laravel-feed": {
+            "type" : "path",
+            "url" : "packages/laravel-feed",
+            "options" : {
+                "symlink": true
+            }
+        }
     },
     "require-dev": {
         "facade/ignition": "^2.5",

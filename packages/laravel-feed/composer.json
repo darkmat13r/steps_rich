@@ -1,0 +1,27 @@
+{
+    "name": "darkmat13r/laravel-feed",
+    "description": "Feeds",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "darkmat13r",
+            "email": "darkmat13r@gmail.com"
+        }
+    ],
+    "require": {
+        "laravel/passport": "^10.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "LaravelFeed\\" : "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers" : [
+                "LaravelFeed\\FeedServiceProvider"
+            ]
+        }
+    }
+}

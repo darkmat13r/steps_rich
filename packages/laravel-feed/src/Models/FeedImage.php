@@ -1,0 +1,12 @@
+<?php
+
+
+namespace LaravelFeed\Models;
+
+
+use Illuminate\Database\Eloquent\Model;
+
+class FeedImage extends  Model
+{
+
+}
