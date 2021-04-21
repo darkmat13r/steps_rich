@@ -115,6 +115,8 @@ Route::group(['middleware' => ['role:admin','auth'],'prefix'=>'admin'], function
     Route::get('/rewards/getData', [RewardController::class,'getData']);
     Route::get('/rewards', [RewardController::class,'index']);
 
+
+
 });
 Route::get("paypal/payment/{customerId}", [\App\Http\Controllers\Frontend\PaymentController::class , 'payment']);
 Route::get("paypal/payment/{customerId}", [\App\Http\Controllers\Frontend\PaymentController::class , 'payment']);

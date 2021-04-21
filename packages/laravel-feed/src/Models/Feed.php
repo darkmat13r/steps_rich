@@ -12,7 +12,9 @@ class Feed extends Model
     function images(){
         return $this->hasMany(FeedImage::class, 'feed_id', 'id');
     }
-
+    function image(){
+        return $this->hasOne(FeedImage::class, 'feed_id', 'id');
+    }
     function comments(){
         return $this->hasMany(FeedComment::class, 'feed_id', 'id');
     }
