@@ -23,7 +23,7 @@ class FeedCommentsController extends Controller
             'user' => function ($query) {
                 $query->select('id', 'name');
             }
-        ]);
+        ])->latest();
         return JsonResponse::success($comments->paginate());
     }
 
@@ -43,9 +43,10 @@ class FeedCommentsController extends Controller
         $comment->forceFill([
             'comment' => $request->get('comment'),
             'user_id' => Auth::id(),
-            'feed_id' => $feedId
+            'feed_id' => (int)$feedId
         ]);
         $comment->save();
+        $comment->user;
         return JsonResponse::success($comment);
     }
 }

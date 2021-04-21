@@ -22,4 +22,7 @@ class Feed extends Model
     function user(){
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+    function scopeLatest($query){
+        return $query->where('updated_at', 'DESC');
+    }
 }

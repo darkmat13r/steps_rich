@@ -32,6 +32,7 @@ class AuthService
             throw new GeneralException(__('auth.errors.invalid_referral_code'));
         }
         $data['password'] = bcrypt($data['password']);
+        $data['level'] = 0;
       //  $data['referral_code'] = ReferralCodeHelper::generate($username);
         $data['email'] = $data['username'];
         unset($data['username']);

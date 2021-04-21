@@ -44,6 +44,7 @@ class FeedController extends \App\Http\Controllers\Controller
 
             ])
             ->with('images')
+            ->latest()
             ->paginate();
         return JsonResponse::success($feeds);
     }

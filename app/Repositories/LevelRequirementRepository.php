@@ -36,7 +36,7 @@ class LevelRequirementRepository
 
 
         $requirement = $requirement->where('has_health_condition', $hasHealthCondition);
-        $requirement = $requirement->where('level', $user->level);
+        $requirement = $requirement->where('level', $user->level+1);
         $requirement = $requirement->where('activity_level', $user->activity_level);
 
         $requirement = $requirement->where('min_age', '<', $age)->where(function ($query) use ($age) {
