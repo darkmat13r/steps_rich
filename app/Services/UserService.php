@@ -9,6 +9,7 @@ use App\Exceptions\GeneralException;
 use App\Models\ActivityLog;
 use App\Models\LevelRequirement;
 use App\Models\User;
+use App\Models\UserTree;
 use App\Repositories\LevelRequirementRepository;
 use App\Repositories\UserActivityRepository;
 use App\Repositories\UserRepository;
@@ -33,12 +34,14 @@ class UserService
     }
 
 
-    function isActive(User $user){
-        return $user->bankAccount && $user->name && $user->dob && $user->gender && $user->weight && $user->height &&  $user->approved_at;
+    function isActive(User $user)
+    {
+        return $user->bankAccount && $user->name && $user->dob && $user->gender && $user->weight && $user->height && $user->approved_at;
     }
 
-    function isApproved(User $user){
-        return  $user->approved_at;
+    function isApproved(User $user)
+    {
+        return $user->approved_at;
     }
 
     function getProfile($userId)
@@ -53,10 +56,10 @@ class UserService
         $user->is_active = $this->isActive($user);
         $user->is_approved = $this->isApproved($user);
         $user->requirement = $this->levelRequirementRepo->getRequirement($user);
-       /* if (!$user->requirement) {
-            throw new GeneralException(__('user.errors.not_eligible'), 403);
-        }*/
-        if(!$user->requirement){
+        /* if (!$user->requirement) {
+             throw new GeneralException(__('user.errors.not_eligible'), 403);
+         }*/
+        if (!$user->requirement) {
             return $user;
         }
 
@@ -70,7 +73,7 @@ class UserService
         $checkFrom = $user->level_last_updated_at ? $user->level_last_updated_at : $user->created_at;
         $checkFrom = Carbon::createFromFormat('Y-m-d', $checkFrom->toDateString());
 
-        $daysDiffFromAccountCreation = $checkFrom->diffInDays(null , false);
+        $daysDiffFromAccountCreation = $checkFrom->diffInDays(null, false);
 
 
         $user->days_to_complete = $daysToCompleteLevel;
@@ -80,7 +83,7 @@ class UserService
         try {
             $achieved = $this->achievedGoals($user, $user->requirement);
         } catch (\Exception $exception) {
-           // dd($exception->getTraceAsString());
+            // dd($exception->getTraceAsString());
         }
         $user->completed = $achieved['stats'];
         $user->weekly_stats = $achieved['weekly_steps'];
@@ -90,6 +93,11 @@ class UserService
         $user->goal_achieved = $achieved['achieved'];
         $user->minimum_goal_achieved = $achieved['minimum_achieved'];
         $user->total_steps_this_week = $achieved['steps'];
+        $parent = UserTree::where('child_user_id', $user->id)->first();
+        if ($parent)
+            $user->referred_by = $parent->parent->name;
+        else
+            $user->referred_by = "NA";
         return $user;
     }
 
@@ -110,7 +118,7 @@ class UserService
         $daysToCompleteLevel = $this->getDayToCompleteLevel($requirement);
         $checkFrom = $user->level_last_updated_at ? $user->level_last_updated_at : $user->created_at;
         $checkFrom = Carbon::createFromFormat('Y-m-d', $checkFrom->toDateString());
-        $endDate = Carbon::createFromFormat('Y-m-d', $checkFrom->toDateString())->addDays($daysToCompleteLevel-1);
+        $endDate = Carbon::createFromFormat('Y-m-d', $checkFrom->toDateString())->addDays($daysToCompleteLevel - 1);
         $daysDiffFromAccountCreation = $checkFrom->diffInDays(Carbon::now());
 
         $daysLeft = $daysToCompleteLevel - $daysDiffFromAccountCreation % $daysToCompleteLevel;
@@ -151,15 +159,15 @@ class UserService
 
         $startDate = $checkFrom;
 
-        $i  = 0;
-        while ($i < $daysToCompleteLevel ) {
+        $i = 0;
+        while ($i < $daysToCompleteLevel) {
             $count = $this->userActivityRepo->getSumByDate($user->id, $startDate->toDateString());
             $stepsTaken = (int)$count;
             $weeklySteps[] = [
                 'name' => $startDate->format('D'),
                 'value' => (int)$stepsTaken];
-           $startDate->addDays(1);
-           $i++;
+            $startDate->addDays(1);
+            $i++;
         }
 
 
