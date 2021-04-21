@@ -27,7 +27,6 @@ class RegisterController extends Controller
             'password' => ['required'],
             'country_code' => ['required'],
             'ic_no' => ['required'],
-            'cert_no' => ['required'],
             'referral_code' => ['required'],
             'country' => ['required'],
             'device_id' => ['required', 'unique:users'],
