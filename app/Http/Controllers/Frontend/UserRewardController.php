@@ -25,12 +25,13 @@ class UserRewardController extends Controller
     function getRewards(){
         $user = Auth::user();
         $rewards = $this->rewardHistoryRepo->getRewards($user);
-        $transact = $user->transactions;
         $activeGrowth = count($this->rewardHistoryService->getActiveGrowth($user->id));
         $passive = $this->rewardHistoryService->getDownlineGrowth($user->id);
         $passiveGrowth = $passive['growth'];
         $certified = $passiveGrowth + $activeGrowth;
-        $payoutAmount = Transaction::where('user_id', $user->id)->sum('amount');
+        $transactionQuery = Transaction::where('user_id', $user->id);
+        $transact = $transactionQuery->limit(15)->get();
+        $payoutAmount = $transactionQuery->sum('amount');
         return JsonResponse::success([
             'rewards' => $rewards,
             'payouts' => $transact,
