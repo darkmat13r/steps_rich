@@ -83,4 +83,8 @@ class User extends Authenticatable
     function getIsProfileCompleteAttribute(){
         return $this->name && $this->gender && $this->weight && $this->height && $this->activity_level;
     }
+
+    function transactions(){
+        return $this->hasMany(Transaction::class, 'user_id', 'id');
+    }
 }

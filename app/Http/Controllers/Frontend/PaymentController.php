@@ -39,7 +39,7 @@ class PaymentController extends Controller
     function createOrder(Request $request, $userId)
     {
         $orderRequest = new OrderRequest();
-        $orderRequest->setAmount("30.00");
+        $orderRequest->setAmount("9.99");
         $orderRequest->setUserId($userId);
         $order = $this->paymentGateway->createOrder($orderRequest);
         $this->updateUserOrder($userId, $order, $orderRequest->getAmount() * 100);
