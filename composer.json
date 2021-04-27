@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "darkmat13r/laravel-feed": "@dev",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
@@ -16,15 +17,24 @@
         "laravel/passport": "^10.1",
         "laravel/tinker": "^2.5",
         "laravelcollective/html": "^6.2",
+        "paypal/paypal-checkout-sdk": "1.0.1",
+        "paypal/paypal-payouts-sdk": "~1.0.0",
+        "paypal/rest-api-sdk-php": "*",
         "spatie/laravel-permission": "^4.0",
         "srmklive/paypal": "~3.0",
-        "yajra/laravel-datatables": "^1.5",
-        "darkmat13r/laravel-feed": "@dev"
+        "yajra/laravel-datatables": "^1.5"
     },
     "repositories": {
         "laravel-feed": {
             "type" : "path",
             "url" : "packages/laravel-feed",
+            "options" : {
+                "symlink": true
+            }
+        },
+        "laravel-paypal" : {
+            "type" : "path",
+            "url" : "packages/laravel-paypal",
             "options" : {
                 "symlink": true
             }

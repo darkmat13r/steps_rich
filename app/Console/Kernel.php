@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Jobs\SendPayoutsJob;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\Log;
@@ -28,6 +29,7 @@ class Kernel extends ConsoleKernel
 
          Log::info("Cron Is Running");
          $schedule->command('level:upgrade')->dailyAt("00:20")->timezone('Asia/Kuala_Lumpur');
+         $schedule->job(new SendPayoutsJob())->dailyAt("06:20")->timezone('Asia/Kuala_Lumpur');
     }
 
     /**

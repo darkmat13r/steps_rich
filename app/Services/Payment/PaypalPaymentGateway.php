@@ -3,12 +3,14 @@
 
 namespace App\Services\Payment;
 
+use Carbon\Carbon;
 use Srmklive\PayPal\Facades\PayPal;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
+use Srmklive\PayPal\Traits\PayPalHttpClient;
+use Srmklive\PayPal\Traits\PayPalRequest;
 
-class PaypalPaymentGateway implements PaymentGateway
+class PaypalPaymentGateway  implements PaymentGateway
 {
-
     private $provider;
 
     public function __construct()
@@ -20,7 +22,7 @@ class PaypalPaymentGateway implements PaymentGateway
     {
         $this->provider = PayPal::setProvider();
         $this->provider->setApiCredentials(config('paypal'));
-        $this->provider->setAccessToken($this->provider->getAccessToken());
+        $this->provider->getAccessToken();
 
     }
 
@@ -39,8 +41,24 @@ class PaypalPaymentGateway implements PaymentGateway
         ]);
     }
 
+    function sendPayout(BatchPayoutRequest $request){
+        $batchId  = Carbon::now()->timestamp;
+        $items = $request->getPayoutReceivers();
+        $data = [
+            'sender_batch_header' =>[
+                'sender_batch_id' => $batchId,
+                'email_subject' => $request->getEmailSubject(),
+                'email_message' => $request->getEmailMessage()
+            ],
+            'items' => $items
+        ];
+        $response = $this->provider->sendPayouts($data);
+        return $response;
+    }
+
     function verify($orderId)
     {
        return $this->provider->capturePaymentOrder($orderId);
     }
+
 }

@@ -4,7 +4,7 @@
 
 <script>
     $(()=>{
-        window.location.href = "https://play.google.com/store/apps/details?id=com.darkmat13r.gesturedrawing&referrer=BlahBlah"
+        window.location.href = "https://play.google.com/store/apps/details?id=com.darkmat13r.ugoku&referrer={{$code}}"
     })
 </script>
 

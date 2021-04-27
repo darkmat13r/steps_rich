@@ -12,7 +12,7 @@ class PaymentGatewayFactory
     {
         switch ($paymentGateway){
             case "paypal" :
-                return new PaypalPaymentGateway();
+                return new PaypalGateway();
         }
         throw new ProviderNotFoundException();
     }

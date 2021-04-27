@@ -16,8 +16,10 @@ class BankAccount extends Model
         'account_type',
         'account_name'];
 
-    function getAccountNumberAttribute($value)
+
+
+    function user()
     {
-        return StringHelper::stringToSecret($value);
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

@@ -94,7 +94,7 @@ class UserService
         $user->minimum_goal_achieved = $achieved['minimum_achieved'];
         $user->total_steps_this_week = $achieved['steps'];
         $parent = UserTree::where('child_user_id', $user->id)->first();
-        if ($parent)
+        if ($parent && $parent->parent)
             $user->referred_by = $parent->parent->name;
         else
             $user->referred_by = "NA";
@@ -244,6 +244,11 @@ class UserService
     public function activate($user_id)
     {
         return $this->userRepo->activate($user_id);
+    }
+
+    public function getPendingPayouts()
+    {
+        return $this->userRepo->getPendingPayouts();
     }
 
 }

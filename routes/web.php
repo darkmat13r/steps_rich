@@ -120,7 +120,9 @@ Route::group(['middleware' => ['role:admin','auth'],'prefix'=>'admin'], function
 });
 Route::get("paypal/payment/{customerId}", [\App\Http\Controllers\Frontend\PaymentController::class , 'payment']);
 Route::get("paypal/payment/{customerId}", [\App\Http\Controllers\Frontend\PaymentController::class , 'payment']);
-Route::get('referral', function (){
-   return view('referral');
+Route::get('referral', function (\Illuminate\Http\Request  $request){
+   return view('referral', [
+       'code' => $request->get('referral')
+   ]);
 });
 

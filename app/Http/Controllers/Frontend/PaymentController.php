@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Route;
 
 class PaymentController extends Controller
 {
@@ -39,7 +40,7 @@ class PaymentController extends Controller
     function createOrder(Request $request, $userId)
     {
         $orderRequest = new OrderRequest();
-        $orderRequest->setAmount("9.99");
+        $orderRequest->setAmount("5");
         $orderRequest->setUserId($userId);
         $order = $this->paymentGateway->createOrder($orderRequest);
         $this->updateUserOrder($userId, $order, $orderRequest->getAmount() * 100);
@@ -67,13 +68,15 @@ class PaymentController extends Controller
     function verify(Request $request, $orderId)
     {
         $order = $this->paymentGateway->verify($orderId);
+        Log::alert(Route::getCurrentRoute()->getName());
+        Log::alert(json_encode(Route::getCurrentRoute()));
         Log::alert(json_encode($order));
         $order = (object)$order;
         $userOrder = Order::where('order_id', $orderId)->first();
         $userOrder->status = $order->status;
         $userOrder->response = json_encode($order);
         $userOrder->save();
-        if ($order->status == 'COMPLETED') {
+        if ($order->status == 'APPROVED' || $order->status == 'COMPLETED') {
          $this->userService->activate($userOrder->user_id);
         }
         return Response::json($order);

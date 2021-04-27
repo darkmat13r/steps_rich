@@ -41,7 +41,6 @@ class RegisterController extends Controller
             'country_code','country','phone',
             'password',
             'ic_no',
-            'cert_no',
             'referral_code', 'device_id']));
         return JsonResponse::success($user);
     }

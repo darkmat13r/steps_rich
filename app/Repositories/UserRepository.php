@@ -21,4 +21,9 @@ class UserRepository
         $user->save();
         return $user;
     }
+
+    public function getPendingPayouts()
+    {
+        return User::where('wallet_amount' , '>', 0)->get();
+    }
 }

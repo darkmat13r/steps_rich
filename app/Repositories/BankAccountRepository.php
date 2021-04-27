@@ -22,4 +22,12 @@ class BankAccountRepository
         ]);
         return $data;
     }
+    function getBankAccount($userId){
+        return BankAccount::where('user_id', $userId)->first();
+    }
+
+    public function getById($id)
+    {
+        return BankAccount::find($id);
+    }
 }
