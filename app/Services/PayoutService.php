@@ -39,7 +39,7 @@ class PayoutService
      */
     public function sendPayouts()
     {
-        try{
+        try {
             Log::info("========================> Payout Start  <========================");
             DB::beginTransaction();
             $payoutRequest = $this->buildPayoutRequest();
@@ -57,10 +57,10 @@ class PayoutService
                     'batch_response' => json_encode($request),
                     'data' => json_encode([])
                 ]);
-                $this->verifyAndUpdateStatus($batchId,$payoutRequest->getPayoutReceivers());
+                $this->verifyAndUpdateStatus($batchId, $payoutRequest->getPayoutReceivers());
             }
             DB::commit();
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             DB::rollBack();
             Log::info("========================> Payout Failed  <========================");
             Log::error($exception->getTraceAsString());
@@ -69,29 +69,58 @@ class PayoutService
         Log::info("========================> Payout Completed  <========================");
     }
 
-    private function verifyAndUpdateStatus($batchId, $data){
+    public function verifyPendingPayouts(){
+        $pendingBatches = PayoutBatchRequest::where('status', 'PENDING')->get();
+        try{
+            DB::beginTransaction();
+            foreach ($pendingBatches as $batch){
+                $this->verifyAndUpdateStatus($batch->batch_id, null);
+            }
+            DB::commit();
+        }catch (\Exception $exception){
+            Log::error($exception->getTraceAsString());
+            DB::rollBack();
+        }
+
+    }
+
+
+    private function verifyAndUpdateStatus($batchId, $data)
+    {
         $payoutStatus = $this->paymentGateway->verifyPayout($batchId);
         Log::info("============== Payout Verify Response ============");
         Log::info(json_encode($payoutStatus));
+        print_r($batchId);
+
         Log::info("============== Payout Verify Response End============");
         $batch = PayoutBatchRequest::updateOrCreate([
             'batch_id' => $batchId
         ], [
             'batch_id' => $batchId,
+            'status' => $payoutStatus->batch_header->batch_status,
             'batch_response' => json_encode($payoutStatus),
-            'data' => json_encode($data)
         ]);
+        if($data){
+            $batch->data =  json_encode($data);
+        }
         $batch->save();
         $items = $payoutStatus->items;
         foreach ($items as $item) {
-            $this->createPayoutRequestEntry($batchId, $item);
-            if ($item->transaction_status == 'SUCCESS') {
-               $this->debitWalletAmount($item->payout_item->sender_item_id);
+            $oldItem = PayoutRequest::where('batch_id', $item->payout_batch_id)->first();
+            if ($oldItem && $oldItem->status == 'SUCCESS') {
+                continue;
+            }else{
+                if ($item->transaction_status == 'SUCCESS') {
+                    $this->debitWalletAmount($item->payout_item->sender_item_id);
+                    $this->createPayoutRequestEntry($batchId, $item);
+                }
             }
+
         }
     }
 
-    private function createPayoutRequestEntry($batchId,$item){
+    private function createPayoutRequestEntry($batchId, $item)
+    {
         PayoutRequest::updateOrCreate([
             'header_batch_id' => $batchId,
             'batch_id' => $item->payout_batch_id,
@@ -107,34 +136,35 @@ class PayoutService
         ]);
     }
 
-    private function debitWalletAmount($bankId){
+    private function debitWalletAmount($bankId)
+    {
         $bankAccount = $this->bankAccountRepo->getById($bankId);
-        Log::info("======================> Bank Id ${$bankId} <-====================");
+        Log::info("======================> Bank Id  <-==================== "  . $bankId);
         Log::info(json_encode($bankAccount));
         if ($bankAccount) {
             $user = $bankAccount->user;
             if ($user) {
                 $user->wallet_amount = 0;
-               $transaction =  (new Transaction())->forceFill([
+                $transaction = (new Transaction())->forceFill([
                     'user_id' => $user->id,
                     'amount' => $user->wallet_amount,
                     'bank_account_id' => $bankAccount->id, 'via' => 'paypal'
                 ]);
-               dd($transaction);
-               $transaction->save();
+                $transaction->save();
                 $user->save();
             }
         }
     }
 
-    private function buildPayoutRequest(){
+    private function buildPayoutRequest()
+    {
         $users = $this->userService->getPendingPayouts();
         $payoutRequest = new BatchPayoutRequest();
         $payoutRequest->setEmailSubject("You have a payout");
         $payoutRequest->setEmailMessage("You have received a payout!");
         foreach ($users as $user) {
             $bankAccount = $this->bankAccountRepo->getBankAccount($user->id);
-            if ($bankAccount) {
+            if ($bankAccount && $user->wallet_amount) {
                 $builder = new PayoutReceiverBuilder();
                 $builder->setAmount($user->wallet_amount);
                 $builder->setCurrency('USD')

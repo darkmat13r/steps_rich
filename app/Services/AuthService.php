@@ -25,7 +25,7 @@ class AuthService
     {
 
         Log::error("DAta : " . json_encode($data));
-        $referralCode = isset($data['referral_code']) ? $data['referral_code'] : null;
+        $referralCode = $data['referral_code'] ?? null;
         $referredBy = User::findByReferralCode($referralCode)->first();
 
         if(!$referredBy){

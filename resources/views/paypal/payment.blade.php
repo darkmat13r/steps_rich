@@ -44,7 +44,7 @@
                             <h6 class="text-center text-muted mb-8">Activate Account</h6>
                             <p class="text-center text-muted mb-8">To activate your account you will need to pay the
                                 amount.</p>
-                            <h4 class="text-center mb-8">USD 5</h4>
+                            <h4 class="text-center mb-8">USD 5.00</h4>
                             <br>
                             <div id="paypal-button-container" class="mt-8 text-center"></div>
 

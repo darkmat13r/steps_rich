@@ -11,5 +11,6 @@ class PayoutBatchRequest extends Model
 
     protected $fillable = ['batch_id',
         'batch_response',
+        'status',
         'data'];
 }

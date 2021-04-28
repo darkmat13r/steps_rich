@@ -26,7 +26,6 @@ class RegisterController extends Controller
             'username' => ['required', 'email', 'unique:users,email'],
             'password' => ['required'],
             'country_code' => ['required'],
-            'ic_no' => ['required'],
             'referral_code' => ['required'],
             'country' => ['required'],
             'device_id' => ['required', 'unique:users'],
@@ -40,7 +39,6 @@ class RegisterController extends Controller
             ->register($request->only(['username',
             'country_code','country','phone',
             'password',
-            'ic_no',
             'referral_code', 'device_id']));
         return JsonResponse::success($user);
     }

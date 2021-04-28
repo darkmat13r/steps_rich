@@ -85,12 +85,7 @@ Route::get('testPayout', function () {
     dd();
 });
 Route::get('testOrder', function () {
-    $response = new \App\Services\Payment\PaypalGateway();
-    $orderRequest = new \App\Services\Payment\OrderRequest();
-    $orderRequest->setAmount("100.00");
-    $orderRequest->setUserId(10);
-    $data = $response->verify('7LU61470LL154505S');
-    dd($data);
+    (new \App\Services\PayoutService())->verifyPendingPayouts();
 });
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('feed', [\LaravelFeed\Controllers\FeedController::class, "getAll"]);
