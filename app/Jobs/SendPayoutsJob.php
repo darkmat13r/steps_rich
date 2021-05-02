@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class SendPayoutsJob implements ShouldQueue
 {
@@ -44,6 +45,7 @@ class SendPayoutsJob implements ShouldQueue
      */
     public function handle()
     {
+        Log::info("==============>Send payouts service is running ==================");
         $this->payoutService->sendPayouts();
 
     }

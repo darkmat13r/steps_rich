@@ -37,7 +37,7 @@ class UpdateLevelJob implements ShouldQueue
     public function handle()
     {
         $users = $this->userService->getAll();
-        Log::debug("UpdateLevelJob Will run now");
+        Log::info("==============> Update level service is running ==================");
         foreach ($users as $user) {
 
             //Set Timezone
