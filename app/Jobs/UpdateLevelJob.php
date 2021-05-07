@@ -70,7 +70,10 @@ class UpdateLevelJob implements ShouldQueue
                         //UpgradeLevel
                         $this->userService->upgradeLevel($user);
                         Log::debug("Level Upgraded" . " of User " . $user->id);
-                    } else if($profile->minimum_achieved >= $profile->requirement->minimum_period){
+                    }else {
+                        $this->userService->updateLastLevelUpdate($user);
+                    }
+                        /*else if($profile->minimum_achieved >= $profile->requirement->minimum_period){
                         $this->userService->updateLastLevelUpdate($user);
                         Log::debug("Level Maintained" . " of User " . $user->id);
                     }else{
@@ -82,12 +85,12 @@ class UpdateLevelJob implements ShouldQueue
                                 'goal' => $profile->steps_required_in_cycle,
                                 'level' => $user->level-1,
                                 'last_level' => $user->level
-                            ])->save();*/
+                            ])->save();
                         }
-                       // $this->userService->downgradeLevel($user);
+                     // $this->userService->downgradeLevel($user);
                         Log::debug("Level Downgraded " . " of User " . $user->id);
 
-                    }
+                    }*/
                 }
             }catch(\Exception $e){
                 Log::error($e->getMessage());

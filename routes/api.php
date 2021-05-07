@@ -41,52 +41,12 @@ Route::group(['middleware' => ['auth:api', 'timezone']], function () {
     Route::get('rewards', [\App\Http\Controllers\Frontend\UserRewardController::class, 'getRewards']);
     Route::get('history', [\App\Http\Controllers\Frontend\UserLevelHistoryController::class, 'getAll']);
 });
-Route::get('users', function (Request $request) {
-    $users = \App\Models\User::all();
-    $profiles = [];
-    $userService = new \App\Services\UserService();
-    foreach ($users as $user) {
-        try {
-            $profiles[] = $userService->getProfile($user->id);
-        } catch (\Exception $e) {
-
-        }
-    }
-    return \App\Helpers\JsonResponse::success($profiles);
-});
-Route::get('user_token', function (Request $request) {
-    $user = \App\Models\User::find($request->get('user_id'));
-    if (!$user) {
-        return \App\Helpers\JsonResponse::fail("User not found", 404);
-    }
-    $user->access_token = $user->createToken("test_token")->accessToken;
-    return \App\Helpers\JsonResponse::success($user);
-});
 
 Route::post("paypal/order/{userId}", [\App\Http\Controllers\Frontend\PaymentController::class, 'createOrder']);
 Route::post('paypal/verify/{orderId}', [\App\Http\Controllers\Frontend\PaymentController::class, 'verify']);
 Route::post('paypal/callback', [\App\Http\Controllers\Frontend\PaymentController::class, 'callback']);
 
-Route::get('testPayout', function () {
-    $response = new \App\Services\Payment\PaypalGateway();
-    $orderRequest = new \App\Services\Payment\BatchPayoutRequest();
-    $orderRequest->setEmailMessage("You have received a payout!");
-    $orderRequest->setEmailSubject("You have a payout");
-    $orderRequest->addPayoutReceiver((new \App\Services\Payment\PayoutReceiverBuilder())
-        ->setAmount("100.00")
-        ->setCurrency('USD')
-        ->setNote('Thanks for your support')
-        ->setSenderItemId(\Carbon\Carbon::now()->timestamp . "_1")
-        ->setReceiver('payouts-simulator-receiver@paypal.com')
 
-    );
-  //  $data = $response->verifyPayout('SAEM44T62EYEE');
-    (new \App\Services\PayoutService())->sendPayouts();
-    dd();
-});
-Route::get('testOrder', function () {
-    (new \App\Services\PayoutService())->verifyPendingPayouts();
-});
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('feed', [\LaravelFeed\Controllers\FeedController::class, "getAll"]);
     Route::post('feed', [\LaravelFeed\Controllers\FeedController::class, "create"]);
@@ -98,4 +58,43 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('feed/{id}/like', [\LaravelFeed\Controllers\FeedLikeController::class, "like"]);
     Route::post('feed/{id}/comment', [\LaravelFeed\Controllers\FeedCommentsController::class, "create"]);
     Route::get('feed/{id}/comment', [\LaravelFeed\Controllers\FeedCommentsController::class, "getAll"]);
+});
+
+
+Route::get("testReward", function () {
+    $userService = new \App\Services\UserService();
+    $rewardService = new \App\Services\UserRewardService();
+
+
+    $arr = [
+        0 => 88,
+    1 => 35,
+    2 => 38,
+    3 => 44,
+    4 => 46,
+    5 => 49,
+    6 => 70,
+    7 => 81,
+    8 => 82,
+    9 => 90,
+    10 => 92,
+    ];
+
+    $arr = [91];
+    foreach ($arr as $r){
+
+        \Illuminate\Support\Facades\Log::info("======================================Reward For $r =================");
+        \Illuminate\Support\Facades\Log::info("======================================  =================");
+        \Illuminate\Support\Facades\Log::info("====================================== =================");
+        \Illuminate\Support\Facades\Log::info("=======================================================");
+        $users = \App\Models\User::where('id',  $r)->get()->shuffle();
+        foreach ($users as $user) {
+            $userService->upgradeLevel($user);
+        }
+        \Illuminate\Support\Facades\Log::info("====================================== =================");
+        \Illuminate\Support\Facades\Log::info("====================================== =================");
+        \Illuminate\Support\Facades\Log::info("====================================== =================");
+        \Illuminate\Support\Facades\Log::info("======================================End Reward For $r =================");
+    }
+
 });

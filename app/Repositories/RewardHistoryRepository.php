@@ -21,7 +21,7 @@ class RewardHistoryRepository
 
     function getReward(User $user,User $fromUser,$fromUserTreeLevel){
         return RewardHistory::where('user_id', $user->id)
-            ->where('user_step_level', $user->level-1)
+            ->where('user_step_level', $user->level)//TODO Check Here If its working fine or not $user->level-1
             ->where('from_id', $fromUser->id)
             ->where('from_tree_level', $fromUserTreeLevel)
             ->first();
@@ -30,7 +30,7 @@ class RewardHistoryRepository
     function addReward($user,  $fromUser, $fromUserTreeLevel, $amount){
         $reward = (new RewardHistory())->forceFill([
             'user_id' => $user->id,
-            'user_step_level' => $user->level-1,
+            'user_step_level' => $user->level,//TODO Check Here If its working fine or not old value was $user->level-1
             'from_id' => $fromUser->id,
             'from_tree_level' => $fromUserTreeLevel,
             'from_step_level' => $fromUser->level,

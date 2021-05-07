@@ -227,9 +227,9 @@ class UserService
 
     public function downgradeLevel(User $user)
     {
-        if ($user->level > 1) {
+       /* if ($user->level > 1) {
             $user->level -= 1;
-        }
+        }*/
         $user->level_last_updated_at = Carbon::now()->toDateTimeString();
         $user->save();
 
