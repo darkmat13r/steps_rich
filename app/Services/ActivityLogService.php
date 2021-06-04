@@ -27,14 +27,13 @@ class ActivityLogService
             throw  new GeneralException(__('activity.errors.invalid_activity', $activity));
         }
         $dateObj = Carbon::now();
-        /*try {
+        try {
             if($date){
                 $dateObj = Carbon::createFromFormat('Y-m-d H:i:s', $date);
             }
         } catch (\Exception $exception) {
             throw new GeneralException(__('activity.errors.invalid_date'));
-        }*/
-
+        }
         $lastLog = $this->activityLogRepo->getLastEntryOfDate($userId, $dateObj);
         $offset = 0;
         if ($lastLog) {

@@ -30,7 +30,7 @@ class Kernel extends ConsoleKernel
 
          Log::info("Cron Is Running");
          $schedule->command('level:upgrade')->dailyAt("00:20")->timezone('Asia/Kuala_Lumpur');
-         $schedule->job(new SendPayoutsJob())->dailyAt("06:20")->timezone('Asia/Kuala_Lumpur');
+         $schedule->job(new SendPayoutsJob())->monthly()->timezone('Asia/Kuala_Lumpur');
          $schedule->job(new VerifyPendingPayouts())->everyTwoHours()->timezone('Asia/Kuala_Lumpur');
     }
 
