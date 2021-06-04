@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+    hello test
 
         <div class="subheader py-2 py-lg-4 subheader-solid" id="kt_subheader">
             <div
