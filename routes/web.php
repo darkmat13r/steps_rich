@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\HealthConditionController;
+use App\Http\Controllers\Admin\FeedController;
 
 use App\Http\Controllers\Admin\RewardSettingController;
 use App\Http\Controllers\Admin\AdminController;
@@ -115,6 +116,10 @@ Route::group(['middleware' => ['role:admin','auth'],'prefix'=>'admin'], function
     Route::get('/rewards/getData', [RewardController::class,'getData']);
     Route::get('/rewards', [RewardController::class,'index']);
 
+
+    // feeds
+    Route::get('/feed/getData', [FeedController::class, 'getData']);
+    Route::resource('/feed', FeedController::class);
 
 
 });
