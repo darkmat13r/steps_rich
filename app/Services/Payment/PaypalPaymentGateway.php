@@ -3,7 +3,10 @@
 
 namespace App\Services\Payment;
 
+use App\Exceptions\GeneralException;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
+use PaypalPayoutsSDK\Payouts\PayoutsGetRequest;
 use Srmklive\PayPal\Facades\PayPal;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use Srmklive\PayPal\Traits\PayPalHttpClient;
@@ -61,4 +64,18 @@ class PaypalPaymentGateway  implements PaymentGateway
        return $this->provider->capturePaymentOrder($orderId);
     }
 
+    function verifyPayout($batchId)
+    {
+        $request = new PayoutsGetRequest($batchId);
+        try {
+            // Call API with your client and get a response for your call
+            $response = $this->client->execute($request);
+            // If call returns body in response, you can get the deserialized version from the result attribute of the response
+            return $response->result;
+        }catch (\HttpException $ex) {
+            Log::error($ex->getMessage());
+            Log::error($ex->getTraceAsString());
+            throw new GeneralException("Some error occurred. Sorry for inconvenience");
+        }
+    }
 }
