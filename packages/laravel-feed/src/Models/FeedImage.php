@@ -10,6 +10,6 @@ class FeedImage extends  Model
 {
 
     function  getUrlAttribute($value){
-        return asset('storage/'.$value);
+        return asset($value);
     }
 }
