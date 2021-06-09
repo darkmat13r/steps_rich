@@ -62,39 +62,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 
 
 Route::get("testReward", function () {
-    $userService = new \App\Services\UserService();
-    $rewardService = new \App\Services\UserRewardService();
+    $paymentService = (new \App\Services\Payment\PaypalGateway());
 
-
-    $arr = [
-        0 => 88,
-    1 => 35,
-    2 => 38,
-    3 => 44,
-    4 => 46,
-    5 => 49,
-    6 => 70,
-    7 => 81,
-    8 => 82,
-    9 => 90,
-    10 => 92,
-    ];
-
-    $arr = [91];
-    foreach ($arr as $r){
-
-        \Illuminate\Support\Facades\Log::info("======================================Reward For $r =================");
-        \Illuminate\Support\Facades\Log::info("======================================  =================");
-        \Illuminate\Support\Facades\Log::info("====================================== =================");
-        \Illuminate\Support\Facades\Log::info("=======================================================");
-        $users = \App\Models\User::where('id',  $r)->get()->shuffle();
-        foreach ($users as $user) {
-            $userService->upgradeLevel($user);
-        }
-        \Illuminate\Support\Facades\Log::info("====================================== =================");
-        \Illuminate\Support\Facades\Log::info("====================================== =================");
-        \Illuminate\Support\Facades\Log::info("====================================== =================");
-        \Illuminate\Support\Facades\Log::info("======================================End Reward For $r =================");
-    }
-
+    dd($paymentService->capture("4DG97026GC6948715"));
 });

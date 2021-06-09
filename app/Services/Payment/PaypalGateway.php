@@ -20,6 +20,7 @@ use PayPal\Rest\ApiContext;
 use PayPalCheckoutSdk\Core\PayPalHttpClient;
 use PayPalCheckoutSdk\Core\SandboxEnvironment;
 use PayPalCheckoutSdk\Core\ProductionEnvironment;
+use PayPalCheckoutSdk\Orders\OrdersCaptureRequest;
 use PayPalCheckoutSdk\Orders\OrdersCreateRequest;
 use PayPalCheckoutSdk\Orders\OrdersGetRequest;
 use PaypalPayoutsSDK\Payouts\PayoutsGetRequest;
@@ -99,6 +100,20 @@ class PaypalGateway implements PaymentGateway
         $request->body = json_encode($data);
         $response = $this->client->execute($request);
         return $response->result;
+    }
+
+    function capture($orderId){
+        $request = new OrdersCaptureRequest($orderId);
+        try {
+            // Call API with your client and get a response for your call
+            $response = $this->client->execute($request);
+            // If call returns body in response, you can get the deserialized version from the result attribute of the response
+            return $response->result;
+        }catch (\HttpException $ex) {
+            Log::error($ex->getMessage());
+            Log::error($ex->getTraceAsString());
+            throw new GeneralException("Some error occurred. Sorry for inconvenience");
+        }
     }
 
     function verify($orderId)

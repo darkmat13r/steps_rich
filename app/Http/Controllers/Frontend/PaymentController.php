@@ -40,7 +40,11 @@ class PaymentController extends Controller
     function createOrder(Request $request, $userId)
     {
         $orderRequest = new OrderRequest();
-        $orderRequest->setAmount("5");
+        if($userId == 10){
+            $orderRequest->setAmount("0.01");
+        }else{
+            $orderRequest->setAmount("5");
+        }
         $orderRequest->setUserId($userId);
         $order = $this->paymentGateway->createOrder($orderRequest);
         $this->updateUserOrder($userId, $order, $orderRequest->getAmount() * 100);
@@ -67,6 +71,7 @@ class PaymentController extends Controller
 
     function verify(Request $request, $orderId)
     {
+        $this->paymentGateway->capture($orderId);
         $order = $this->paymentGateway->verify($orderId);
         Log::alert(Route::getCurrentRoute()->getName());
         Log::alert(json_encode(Route::getCurrentRoute()));

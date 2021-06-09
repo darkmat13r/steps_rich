@@ -10,5 +10,6 @@ interface PaymentGateway
     function createOrder(OrderRequest $request);
     function sendPayout(BatchPayoutRequest $request);
     function verify($orderId);
+    function capture($orderId);
     function verifyPayout($batchId);
 }
