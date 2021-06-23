@@ -21,7 +21,7 @@ class RewardHistoryRepository
 
     function getReward(User $user,User $fromUser,$fromUserTreeLevel){
         return RewardHistory::where('user_id', $user->id)
-            ->where('user_step_level', $user->level)//TODO Check Here If its working fine or not $user->level-1
+            ->where('from_step_level', $fromUser->level)//TODO Check Here If its working fine or not $user->level-1
             ->where('from_id', $fromUser->id)
             ->where('from_tree_level', $fromUserTreeLevel)
             ->first();

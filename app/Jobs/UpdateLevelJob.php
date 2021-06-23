@@ -57,7 +57,7 @@ class UpdateLevelJob implements ShouldQueue
                 $daysToComplete = $this->userService->getDayToCompleteLevel($profile->requirement);
                 $now = Carbon::createFromFormat("Y-m-d", Carbon::now()->toDateString());
                 $userEndDate = $user->level_last_updated_at ? $user->level_last_updated_at : $user->created_at;
-                $endDate = Carbon::createFromFormat('Y-m-d', $userEndDate->toDateString())->addDays($daysToComplete-1);
+                $endDate = Carbon::createFromFormat('Y-m-d', $userEndDate->toDateString())->addDays($daysToComplete);
                 if ($now->greaterThanOrEqualTo($endDate)) {
                     if ($profile->goal_achieved >= $profile->requirement->required_period) {
                         (new UserLevelHistory())->forceFill([

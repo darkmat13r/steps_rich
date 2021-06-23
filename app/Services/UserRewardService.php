@@ -63,39 +63,41 @@ class UserRewardService
                 }
             }
 
-
+            Log::info("Upline rewards--------------------> " . $user->id);
             //Add reward to upline
-            $nextTreeLevel = $currentTreeLevel + 1;
+            $currentTreeLevel = $currentTreeLevel + 1;
             $userTree = UserTree::where('child_user_id', $user->id)->first();
-            Log::info("Going up level " . $nextTreeLevel);
-            $nextRewardSetting = RewardSetting::where('tree_level', $nextTreeLevel)
+            Log::info("Going up level " . $currentTreeLevel);
+            Log::info("Going up StepLevel " . $user->level);
+            $nextRewardSetting = RewardSetting::where('tree_level', $currentTreeLevel)
                 ->where('step_level', $user->level)
                 ->first();
             Log::info("Going up NExt Level Settings " . json_encode($nextRewardSetting));
             $lastUser = $user;
             while ($userTree && $nextRewardSetting) {
-                $nextUser = User::find($userTree->parent_user_id);
-                Log::info("Find Next User up tree " . json_encode($nextUser));
-                if (!$nextUser) {
+                $nextUplineUser = User::find($userTree->parent_user_id);
+                Log::info("Find Next User up tree " . json_encode($nextUplineUser));
+                if (!$nextUplineUser) {
                     DB::commit();
                     return;
                 }
 
-                $rewardHistory = $this->rewardHistoryRepo->getReward($nextUser, $lastUser, $nextTreeLevel);
+                $rewardHistory = $this->rewardHistoryRepo->getReward($nextUplineUser, $user, $currentTreeLevel);
                 Log::info("Find FInd reward history " . json_encode($rewardHistory));
-                if (!$rewardHistory && $nextUser->level > 0) {
-                    $this->rewardHistoryRepo->addReward($nextUser, $lastUser, $nextTreeLevel, $nextRewardSetting->reward);
+                if (!$rewardHistory && $nextUplineUser->level > 0) {
+                    $this->rewardHistoryRepo->addReward($nextUplineUser, $user, $currentTreeLevel, $nextRewardSetting->reward);
                 }
 
-                $nextTreeLevel = $nextRewardSetting->tree_level + 1;
-                Log::info("Next Tree Level : $nextTreeLevel " . json_encode($nextTreeLevel));
-                $nextRewardSetting = RewardSetting::where('tree_level', $nextTreeLevel)
-                    ->where('step_level', $nextUser->level)
+                $currentTreeLevel = $nextRewardSetting->tree_level + 1;
+                Log::info("Next Tree Level : $currentTreeLevel " . json_encode($user->level));
+                $nextRewardSetting = RewardSetting::where('tree_level', $currentTreeLevel)
+                   // ->where('step_level', $user->level)
+                    ->where('step_level', $user->level)
                     ->first();
                 Log::info("Next Reward Settings " . json_encode($nextRewardSetting));
-                $userTree = UserTree::where('child_user_id', $nextUser->id)->first();
+                $userTree = UserTree::where('child_user_id', $nextUplineUser->id)->first();
                 Log::info("Next User Settings " . json_encode($userTree));
-                $lastUser = $nextUser;
+                $lastUser = $nextUplineUser;
             }
             DB::commit();
         } catch (\Exception $ex) {

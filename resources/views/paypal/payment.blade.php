@@ -20,7 +20,7 @@
             integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
             crossorigin="anonymous"></script>
     <script
-        src="https://www.paypal.com/sdk/js?&client-id=AdowpQNN6HYVhVHeoMYk18J2hps-m0eM4gSs0qsqyFOCezVdjrpG-Nde-MRYoHMwsvawF0AiVHlPEEw0"></script>
+        src="https://www.paypal.com/sdk/js?&client-id=AWoQbQejH10gMyA0rC9NRqH-MNouJOR74EtNA3DSlYJmYyoM15ctj9n7cZJ2PLXFqGcoCVD3cdhpV183"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
             crossorigin="anonymous"></script>

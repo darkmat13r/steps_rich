@@ -62,7 +62,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 
 
 Route::get("testReward", function () {
-    $paymentService = (new \App\Services\Payment\PaypalGateway());
+    $paymentService = (new \App\Services\UserRewardService());
 
-    dd($paymentService->capture("4DG97026GC6948715"));
+    dd($paymentService->addRewards(\App\Models\User::find(100)));
 });
