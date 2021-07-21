@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Jobs\SendPayoutsJob;
+use App\Jobs\UpdateLevelJob;
 use App\Jobs\VerifyPendingPayouts;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -28,7 +29,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
 
-         $schedule->command('level:upgrade')->dailyAt("00:20")->timezone('Asia/Kuala_Lumpur');
+         $schedule->job(new UpdateLevelJob())->everyFifteenMinutes()->timezone('Asia/Kuala_Lumpur');
          $schedule->job(new SendPayoutsJob())->monthly()->timezone('Asia/Kuala_Lumpur');
          $schedule->job(new VerifyPendingPayouts())->everyTwoHours()->timezone('Asia/Kuala_Lumpur');
     }

@@ -46,7 +46,7 @@ class UserRewardService
                     $rewardHistory = $this->rewardHistoryRepo->getReward($user, $user, $currentTreeLevel);
                     Log::info("Reward History Available " . json_encode($rewardHistory));
                     if (!$rewardHistory) {
-                        Log::info("Adding Reward " . $rewardSettings->reward);
+                        Log::info("Here adding reward =============>  1" .json_encode($rewardSettings));
                         $this->rewardHistoryRepo->addReward($user, $user, $currentTreeLevel, $rewardSettings->reward);
                     }
                 }
@@ -85,7 +85,12 @@ class UserRewardService
                 $rewardHistory = $this->rewardHistoryRepo->getReward($nextUplineUser, $user, $currentTreeLevel);
                 Log::info("Find FInd reward history " . json_encode($rewardHistory));
                 if (!$rewardHistory && $nextUplineUser->level > 0) {
-                    $this->rewardHistoryRepo->addReward($nextUplineUser, $user, $currentTreeLevel, $nextRewardSetting->reward);
+                    Log::info("Here adding reward =============>  2" . json_encode($rewardHistory));
+                    $reward = RewardSetting::where('tree_level', $currentTreeLevel)
+                        // ->where('step_level', $user->level)
+                        ->where('step_level', $nextUplineUser->level)
+                        ->first();
+                    $this->rewardHistoryRepo->addReward($nextUplineUser, $user, $currentTreeLevel, $reward->reward);
                 }
 
                 $currentTreeLevel = $nextRewardSetting->tree_level + 1;

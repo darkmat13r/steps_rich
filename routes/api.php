@@ -63,6 +63,10 @@ Route::group(['middleware' => 'auth:api'], function () {
 
 Route::get("testReward", function () {
     $paymentService = (new \App\Services\UserRewardService());
+    $userService = (new \App\Services\UserService());
+    $users = \App\Models\User::all();
+    foreach ($users as $user){
+        $userService->upgradeLevel($user);
+    }
 
-    dd($paymentService->addRewards(\App\Models\User::find(100)));
 });
