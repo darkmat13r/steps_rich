@@ -5,6 +5,7 @@ use App\Http\Controllers\Frontend\Auth\RegisterController;
 use App\Http\Controllers\Frontend\HealthConditionController;
 use App\Http\Controllers\Frontend\UserActivityController;
 use App\Http\Controllers\Frontend\UserProfileController;
+use App\Jobs\SendPayoutsJob;
 use App\Services\AuthService;
 use Faker\Factory;
 use Illuminate\Http\Request;
@@ -62,11 +63,5 @@ Route::group(['middleware' => 'auth:api'], function () {
 
 
 Route::get("testReward", function () {
-    $paymentService = (new \App\Services\UserRewardService());
-    $userService = (new \App\Services\UserService());
-    $users = \App\Models\User::all();
-    foreach ($users as $user){
-        $userService->upgradeLevel($user);
-    }
-
+    SendPayoutsJob::dispatch();
 });
